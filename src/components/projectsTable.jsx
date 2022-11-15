@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-
-class projectTable extends Component {
+import { getProjects } from "../services/projectService";
+class ProjectTable extends Component {
   state = {
     projects: [],
   };
+
+  async componentDidMount() {
+    const { data } = await getProjects();
+    const projects = [...data];
+    this.setState({ projects });
+  }
 
   render() {
     return (
@@ -33,4 +39,4 @@ class projectTable extends Component {
   }
 }
 
-export default projectTable;
+export default ProjectTable;
