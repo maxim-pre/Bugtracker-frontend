@@ -1,12 +1,19 @@
 import "./App.css";
-import RegistrationFrom from "./components/registrationForm";
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="container">
-      <RegistrationFrom />
-    </div>
-  );
+import RegistrationFrom from "./components/registrationForm";
+import projectTable from "./components/projectsTable";
+import axios from "axios";
+
+class App extends Component {
+  render() {
+    return (
+      <div className="container">
+        <RegistrationFrom />
+        <projectTable />
+      </div>
+    );
+  }
 }
 
 export default App;
