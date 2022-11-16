@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getProjects } from "../services/projectService";
+import { link } from "react-router-dom";
 class ProjectTable extends Component {
   state = {
     projects: [],
@@ -25,7 +26,7 @@ class ProjectTable extends Component {
           </thead>
           <tbody>
             {this.state.projects.map((p) => (
-              <tr>
+              <tr key={p.id}>
                 <td>{p.name}</td>
                 <td>{p.description}</td>
                 <td>{p.creator}</td>
