@@ -12,6 +12,7 @@ class App extends Component {
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/projects" element={<ProjectTable />} />
       </Routes>
     );
   }

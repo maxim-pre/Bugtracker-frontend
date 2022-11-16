@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-
+import { register } from "../services/userService";
 class RegistrationForm extends Form {
   state = {
     data: {
@@ -22,9 +22,15 @@ class RegistrationForm extends Form {
     email: Joi.string().email().required().label("Email"),
   };
 
-  doSubmit = () => {
-    // will need to call the backend server here
-    console.log("submitted");
+  doSubmit = async () => {
+    try {
+      await register(this.state.data);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...ex.response.data };
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {
