@@ -8,24 +8,26 @@ import LoginForm from "./components/loginForm";
 import Navbar from "./components/navbar";
 import Project from "./components/project";
 import NotFound from "./components/notFound";
+import { getUser } from "./services/authService";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+
 class App extends Component {
   state = {};
 
-  componentDidMount() {
+  async componentDidMount() {
     try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
+      const response = await getUser();
+      const user = response.data;
       this.setState({ user });
-      console.log(user);
     } catch (ex) {}
   }
 
   render() {
     return (
       <React.Fragment>
-        <Navbar />
+        <Navbar user={this.state.user} />
         <main className="container">
           <Routes>
             <Route path="/login" element={<LoginForm />} />
