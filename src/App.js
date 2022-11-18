@@ -8,8 +8,8 @@ import LoginForm from "./components/loginForm";
 import Navbar from "./components/navbar";
 import Project from "./components/project";
 import NotFound from "./components/notFound";
+import Logout from "./components/logout";
 import { getUser } from "./services/authService";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -18,9 +18,8 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const response = await getUser();
-      const user = response.data;
-      this.setState({ user });
+      const response = await getUser(localStorage.getItem("token"));
+      this.setState({ user: response.data });
     } catch (ex) {}
   }
 
@@ -31,6 +30,7 @@ class App extends Component {
         <main className="container">
           <Routes>
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/projects" element={<ProjectTable />} />
             <Route path="projects/:id" element={<Project />} />

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { register } from "../services/userService";
+import FormBackground from "./common/formBackground";
 class RegistrationForm extends Form {
   state = {
     data: {
@@ -36,9 +37,11 @@ class RegistrationForm extends Form {
   render() {
     const { data, errors } = this.state;
     return (
-      <div>
-        <h1>Create User</h1>
-        <form action="">
+      <FormBackground>
+        <div className="text-center">
+          <h1 className="h4 text-gray-900 mb-4">Create an account</h1>
+        </div>
+        <form action="" className="user">
           {this.renderInput("firstName", "First Name")}
           {this.renderInput("lastName", "Last Name")}
           {this.renderInput("username", "username")}
@@ -47,7 +50,7 @@ class RegistrationForm extends Form {
 
           {this.rederButton("Submit")}
         </form>
-      </div>
+      </FormBackground>
     );
   }
 }

@@ -5,7 +5,7 @@ const Input = ({ value, name, onChange, label, error, type }) => {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <input
-        className="form-control"
+        className="form-control form-control-user"
         type={type}
         id={name}
         name={name}
