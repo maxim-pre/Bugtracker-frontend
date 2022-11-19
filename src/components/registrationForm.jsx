@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { register } from "../services/userService";
-import FormBackground from "./common/formBackground";
+import FormBackground from "./common/wrappers/formBackground";
 class RegistrationForm extends Form {
   state = {
     data: {

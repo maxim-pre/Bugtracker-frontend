@@ -12,6 +12,8 @@ import Logout from "./components/logout";
 import { getUser } from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import SideBar from "./components/sideBar";
+import TopBar from "./components/topbar";
 
 class App extends Component {
   state = {};
@@ -26,17 +28,24 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Navbar user={this.state.user} />
-        <main className="container">
-          <Routes>
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/register" element={<RegistrationForm />} />
-            <Route path="/projects" element={<ProjectTable />} />
-            <Route path="projects/:id" element={<Project />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
+        <div id="wrapper">
+          <SideBar />
+          <div id="content-wrapper" className="d-flex flex-column">
+            <div id="content">
+              <TopBar user={this.state.user} />
+              <Routes>
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/register" element={<RegistrationForm />} />
+                <Route path="/projects" element={<ProjectTable />} />
+                <Route path="projects/:id" element={<Project />} />
+                <Route path="/sidebar" element={<SideBar />} />
+                <Route path="/topbar" element={<TopBar />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     );
   }

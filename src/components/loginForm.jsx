@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import FormBackground from "./common/formBackground";
+import FormBackground from "./common/wrappers/formBackground";
 import { login } from "../services/authService";
 import { Link } from "react-router-dom";
 class LoginForm extends Form {
@@ -47,6 +47,7 @@ class LoginForm extends Form {
           {this.renderInput("password", "Password", "password")}
           {this.rederButton("Submit")}
         </form>
+        <hr />
         <div class="text-left">
           <Link class="small" to="/patch_password">
             Forgot Password?
