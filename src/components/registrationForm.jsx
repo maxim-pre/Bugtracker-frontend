@@ -26,6 +26,7 @@ class RegistrationForm extends Form {
   doSubmit = async () => {
     try {
       await register(this.state.data);
+      window.location.href = "/dashboard";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...ex.response.data };

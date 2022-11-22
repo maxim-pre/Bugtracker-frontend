@@ -5,11 +5,12 @@ import { paginate } from "../utils/paginate";
 import BasicCard from "./common/wrappers/basicCard";
 import Table from "./common/table";
 import Pagination from "./common/pagination";
+import CreateProjectForm from "./createProjectFrom";
 class ProjectTable extends Component {
   state = {
     projects: [],
     currentPage: 1,
-    pageSize: 3,
+    pageSize: 4,
   };
 
   columns = [
@@ -44,21 +45,23 @@ class ProjectTable extends Component {
     const headers = ["Name", "Description", "Creator", "Date Created"];
     const { count, data } = this.getPagedData();
     return (
-      <BasicCard
-        header={"My Projects"}
-        body={
-          <div className="table-responsive">
-            <Table columns={this.columns} data={data} />
-            <hr />
-            <Pagination
-              itemsCount={count}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              onPageChange={this.handlePageChange}
-            />
-          </div>
-        }
-      />
+      <React.Fragment>
+        <BasicCard
+          header={"My Projects"}
+          body={
+            <div className="table-responsive">
+              <Table columns={this.columns} data={data} />
+              <hr />
+              <Pagination
+                itemsCount={count}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
+          }
+        />
+      </React.Fragment>
     );
   }
 }

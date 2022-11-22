@@ -6,7 +6,6 @@ import RegistrationForm from "./components/registrationForm";
 import ProjectTable from "./components/projectsTable";
 import LoginForm from "./components/loginForm";
 import Navbar from "./components/navbar";
-import Project from "./components/project";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import { getUser } from "./services/authService";
@@ -14,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import SideBar from "./components/sideBar";
 import TopBar from "./components/topbar";
+import CreateProjectForm from "./components/createProjectFrom";
 
 class App extends Component {
   state = {};
@@ -39,9 +39,11 @@ class App extends Component {
                   <Route path="/logout" element={<Logout />} />
                   <Route path="/register" element={<RegistrationForm />} />
                   <Route path="/projects" element={<ProjectTable />} />
-                  <Route path="projects/:id" element={<Project />} />
-                  <Route path="/sidebar" element={<SideBar />} />
-                  <Route path="/topbar" element={<TopBar />} />
+                  <Route
+                    path="/createproject"
+                    element={<CreateProjectForm />}
+                  />
+
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
