@@ -22,7 +22,6 @@ const Pagination = ({ itemsCount, currentPage, pageSize, onPageChange }) => {
       </ul>
     </nav>
   );
-  f;
 };
 
 export default Pagination;

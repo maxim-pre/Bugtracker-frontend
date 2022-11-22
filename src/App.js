@@ -33,16 +33,18 @@ class App extends Component {
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
               <TopBar user={this.state.user} />
-              <Routes>
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/register" element={<RegistrationForm />} />
-                <Route path="/projects" element={<ProjectTable />} />
-                <Route path="projects/:id" element={<Project />} />
-                <Route path="/sidebar" element={<SideBar />} />
-                <Route path="/topbar" element={<TopBar />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <div className="container-fluid">
+                <Routes>
+                  <Route path="/login" element={<LoginForm />} />
+                  <Route path="/logout" element={<Logout />} />
+                  <Route path="/register" element={<RegistrationForm />} />
+                  <Route path="/projects" element={<ProjectTable />} />
+                  <Route path="projects/:id" element={<Project />} />
+                  <Route path="/sidebar" element={<SideBar />} />
+                  <Route path="/topbar" element={<TopBar />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
             </div>
           </div>
         </div>
