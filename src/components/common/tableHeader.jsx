@@ -5,7 +5,7 @@ const TableHeader = ({ columns }) => {
     <thead>
       <tr>
         {columns.map((column) => (
-          <th className="text-left" scope="col">
+          <th key={column.label} className="text-left" scope="col">
             {column.label}
           </th>
         ))}

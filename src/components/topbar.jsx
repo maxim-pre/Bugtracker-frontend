@@ -6,8 +6,8 @@ class TopBar extends Component {
   render() {
     const { user } = this.props;
     return (
-      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        <ul class="navbar-nav ml-auto">
+      <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <ul className="navbar-nav ml-auto">
           {!user && (
             <React.Fragment>
               <NavItem
@@ -32,7 +32,7 @@ class TopBar extends Component {
                 isactive="false"
                 className={"mr-2 d-none d-lg-inline text-gray-600 small"}
               />
-              <div class="topbar-divider d-none d-sm-block"></div>
+              <div className="topbar-divider d-none d-sm-block"></div>
               <NavItem
                 label="Profile"
                 url="/profile"

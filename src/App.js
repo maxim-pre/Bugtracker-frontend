@@ -14,6 +14,7 @@ import "./App.css";
 import SideBar from "./components/sideBar";
 import TopBar from "./components/topbar";
 import CreateProjectForm from "./components/createProjectFrom";
+import Projects from "./components/projects";
 
 class App extends Component {
   state = {};
@@ -38,7 +39,7 @@ class App extends Component {
                   <Route path="/login" element={<LoginForm />} />
                   <Route path="/logout" element={<Logout />} />
                   <Route path="/register" element={<RegistrationForm />} />
-                  <Route path="/projects" element={<ProjectTable />} />
+                  <Route path="/projects" element={<Projects />} />
                   <Route
                     path="/createproject"
                     element={<CreateProjectForm />}

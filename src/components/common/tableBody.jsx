@@ -3,7 +3,13 @@ import _ from "lodash";
 
 class TableBody extends Component {
   renderCell = (item, column) => {
+    if (column.content) return column.content(item);
+
     return _.get(item, column.path);
+  };
+
+  createKey = (item, column) => {
+    return item.id + (column.path || column.key);
   };
 
   render() {
@@ -13,9 +19,10 @@ class TableBody extends Component {
         {data.map((item) => (
           <tr key={item.id}>
             {columns.map((column) => (
-              <td className="text-left">{this.renderCell(item, column)}</td>
+              <td key={this.createKey(item, column)} className="text-left">
+                {this.renderCell(item, column)}
+              </td>
             ))}
-            <td className="text-left">{item.name}</td>
           </tr>
         ))}
       </tbody>
