@@ -17,12 +17,13 @@ class ProjectTable extends Component {
   ];
 
   render() {
-    const { data } = this.props;
+    const { data, onSort, sortColumn } = this.props;
     return (
       <Table
         columns={this.columns}
         data={data}
-        onItemSelect={this.handleProjectChange}
+        onSort={onSort}
+        sortColumn={sortColumn}
       />
     );
   }

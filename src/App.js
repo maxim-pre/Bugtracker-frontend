@@ -1,20 +1,17 @@
-import React, { Component, useDebugValue } from "react";
+import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import jwtDecode from "jwt-decode";
-import RegistrationForm from "./components/registrationForm";
-import ProjectTable from "./components/projectsTable";
-import LoginForm from "./components/loginForm";
-import Navbar from "./components/navbar";
-import NotFound from "./components/notFound";
-import Logout from "./components/logout";
 import { getUser } from "./services/authService";
+import TopBar from "./components/topbar";
+import SideBar from "./components/sideBar";
+import LoginForm from "./components/loginForm";
+import Logout from "./components/logout";
+import RegistrationForm from "./components/registrationForm";
+import Projects from "./components/projects";
+import Project from "./components/project";
+import CreateProjectForm from "./components/createProjectFrom";
+import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import SideBar from "./components/sideBar";
-import TopBar from "./components/topbar";
-import CreateProjectForm from "./components/createProjectFrom";
-import Projects from "./components/projects";
 
 class App extends Component {
   state = {};
@@ -39,7 +36,12 @@ class App extends Component {
                   <Route path="/login" element={<LoginForm />} />
                   <Route path="/logout" element={<Logout />} />
                   <Route path="/register" element={<RegistrationForm />} />
-                  <Route path="/projects" element={<Projects />} />
+                  <Route
+                    path="/projects"
+                    element={<Projects user={this.state.user} />}
+                  />
+                  <Route path="/projects/:project_id" element={<Project />} />
+
                   <Route
                     path="/createproject"
                     element={<CreateProjectForm />}

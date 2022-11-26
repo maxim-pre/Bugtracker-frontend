@@ -23,10 +23,8 @@ class LoginForm extends Form {
       const { data } = this.state;
       const { data: jwt } = await login(data.username, data.password);
       localStorage.setItem("token", jwt.access);
-      console.log(jwt.access);
       window.location.href = "/";
     } catch (ex) {
-      console.log(ex);
       if (ex.response && ex.response.status === 401) {
         const errors = { ...this.state.errors };
         errors.password = ex.response.data.detail;
