@@ -17,6 +17,16 @@ export function getProjectDevelopers(project_id, token) {
   );
 }
 
+// returns a list of ticket objects who are assigned to a given project
+export function getProjectTickets(project_id, token) {
+  return http.get(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/tickets/`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
+
 // creates a new project#
 export function createProject(project, token) {
   return http.post(
