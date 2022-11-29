@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getUser } from "./services/authService";
+import { ToastContainer } from "react-toastify";
 import TopBar from "./components/topbar";
 import SideBar from "./components/sideBar";
 import LoginForm from "./components/loginForm";
@@ -12,7 +13,8 @@ import CreateProjectForm from "./components/createProjectFrom";
 import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
+import { Toast } from "react-bootstrap";
+import UpdateProjectForm from "./components/updateProjectForm";
 class App extends Component {
   state = {};
 
@@ -26,6 +28,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <div id="wrapper">
           <SideBar />
           <div id="content-wrapper" className="d-flex flex-column">
@@ -45,6 +48,10 @@ class App extends Component {
                   <Route
                     path="/createproject"
                     element={<CreateProjectForm />}
+                  />
+                  <Route
+                    path="/updateproject"
+                    element={<UpdateProjectForm />}
                   />
 
                   <Route path="*" element={<NotFound />} />

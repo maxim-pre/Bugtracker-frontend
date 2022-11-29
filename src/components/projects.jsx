@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import { getProjects } from "../services/projectService";
+import { deleteProject } from "../services/projectService";
 import { paginate } from "../utils/paginate";
 import BasicCard from "./common/wrappers/basicCard";
 import Pagination from "./common/pagination";
 import ProjectTable from "./projectsTable";
-import ListGroup from "./common/listGroup";
+import DropDownLink from "./common/dropdownLink";
+import UpdateProjectModal from "./common/modals/updateProjectModal";
+import CreateProjectModal from "./common/modals/createProjectModal";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import _ from "lodash";
-
 class Projects extends Component {
   state = {
     projects: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 6,
     sortColumn: { path: "name", order: "asc" },
     listgroup: [
       { name: "All Projects", id: "" },
@@ -20,6 +23,8 @@ class Projects extends Component {
       { name: "Shared with you", id: "2" },
     ],
     currentListGroup: { name: "All Projects", id: "" },
+    updateModal: { project: null, show: false },
+    createModal: { show: false },
   };
 
   async componentDidMount() {
@@ -38,9 +43,32 @@ class Projects extends Component {
     this.setState({ sortColumn });
   };
 
+  handleDelete = async (project) => {
+    const originalProjects = this.state.projects;
+    const projects = originalProjects.filter((p) => p.id !== project.id);
+    this.setState({ projects });
+    try {
+      await deleteProject(project.id, localStorage.getItem("token"));
+    } catch (ex) {
+      if (ex.response && ex.response.status === 403)
+        toast.error(ex.response.data.error);
+      this.setState({ projects: originalProjects });
+    }
+  };
+
+  handleUpdate = (project) => {
+    this.setState({ updateModal: { project: project, show: true } });
+  };
+
+  handleModalClose = () => {
+    this.setState({
+      updateModal: { project: null, show: false },
+      createModal: { show: false },
+    });
+  };
+
   handleListGroupChange = (item) => {
     this.setState({ currentListGroup: item, currentPage: 1 });
-    console.log(this.state.currentListGroup);
   };
 
   getFilteredProjects = (allProjects, currentListGroup, user) => {
@@ -79,34 +107,46 @@ class Projects extends Component {
   };
 
   render() {
-    const { currentPage, pageSize, sortColumn, listgroup, currentListGroup } =
-      this.state;
+    const {
+      currentPage,
+      pageSize,
+      sortColumn,
+      listgroup,
+      updateModal,
+      createModal,
+    } = this.state;
     const { count, data } = this.getPagedData();
     return (
       <React.Fragment>
         <BasicCard
           header={
-            <div className="d-sm-flex align-items-center justify-content-between">
-              <h4>My Projects</h4>
-              <Link to={"/createproject"} className="btn-sm btn-primary">
+            <div className="d-sm-flex align-items-center">
+              <h4 className="header h3 mb-0 text-gray-800">My Projects</h4>
+              <div className="filter-button">
+                <DropDownLink
+                  items={listgroup}
+                  onChange={this.handleListGroupChange}
+                  className={"btn btn-secondary btn-sm dropdown-toggle"}
+                  label={"Filters"}
+                />
+              </div>
+              <button
+                className="btn btn-primary btn-sm create-button"
+                onClick={() => this.setState({ createModal: { show: true } })}
+              >
                 New Project
-              </Link>
+              </button>
             </div>
           }
           body={
             <div className="row">
-              <div className="col-2">
-                <ListGroup
-                  items={listgroup}
-                  currentItem={currentListGroup}
-                  onChange={this.handleListGroupChange}
-                />
-              </div>
               <div className="col table-responsive">
                 <ProjectTable
                   data={data}
                   sortColumn={sortColumn}
                   onSort={this.handleSort}
+                  onDelete={this.handleDelete}
+                  onUpdate={this.handleUpdate}
                 />
               </div>
               <hr />
@@ -118,6 +158,15 @@ class Projects extends Component {
               />
             </div>
           }
+        />
+        <CreateProjectModal
+          show={createModal.show}
+          onClose={this.handleModalClose}
+        />
+        <UpdateProjectModal
+          show={updateModal.show}
+          project={updateModal.project}
+          onClose={this.handleModalClose}
         />
       </React.Fragment>
     );

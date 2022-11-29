@@ -17,9 +17,16 @@ class TableBody extends Component {
     return (
       <tbody className="table-group-divider">
         {data.map((item) => (
-          <tr key={item.id}>
+          <tr key={item.id} className="table-row">
             {columns.map((column) => (
-              <td key={this.createKey(item, column)} className="text-left">
+              <td
+                key={this.createKey(item, column)}
+                className={
+                  column.className
+                    ? column.className
+                    : "text-left text-xs font-weight-bold"
+                }
+              >
                 {this.renderCell(item, column)}
               </td>
             ))}

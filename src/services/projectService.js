@@ -28,3 +28,20 @@ export function createProject(project, token) {
     { headers: { Authorization: `Bearer ${token}` } }
   );
 }
+
+export function deleteProject(project_id, token) {
+  return http.delete(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
+
+export function updateProject(project_id, data, token) {
+  return http.put(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/`,
+    data,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}

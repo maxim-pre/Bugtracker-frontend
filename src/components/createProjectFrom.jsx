@@ -34,16 +34,11 @@ class CreateProjectForm extends Form {
   render() {
     const { data, errors } = this.state;
     return (
-      <FormBackground>
-        <div className="text-center">
-          <h1 className="h4 text-gray-900 mb-4">Create Project</h1>
-        </div>
-        <form action="" className="user">
-          {this.renderInput("name", "Name")}
-          {this.renderInput("description", "Description")}
-          {this.rederButton("Create")}
-        </form>
-      </FormBackground>
+      <form action="" className="user">
+        {this.renderInput("name", "Name")}
+        {this.renderTextArea("description", "Description")}
+        {this.rederButton("Create")}
+      </form>
     );
   }
 }

@@ -11,3 +11,53 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.modal-title {
+  color: black;
+}
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 0px;
+}
+.float-container {
+  padding: 20px;
+  width: 110%;
+}
+
+.header {
+  position: relative;
+  left: 0px;
+}
+
+.create-button {
+  position: absolute;
+  right: 2%;
+}
+
+.filter-button {
+  position: relative;
+  left: 68%;
+}
+
+tr button.edit {
+  display: none;
+}
+
+tr:hover button.edit {
+  display: initial;
+}
+
+.list-group-item {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+th.table-actions {
+  width: 9%;
+}
+
+tr.table-row {
+  height: 60px;
+}

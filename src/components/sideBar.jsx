@@ -12,14 +12,29 @@ class SideBar extends Component {
       >
         <hr className="sidebar-divider my-0" />
 
-        <NavItem label={"Dashboard"} url={"/dashboarad"} isactive={false} />
+        <NavItem
+          label={"Dashboard"}
+          url={"/dashboarad"}
+          isactive={true}
+          icon={<i className="fa fa-tachometer" aria-hidden="true"></i>}
+        />
 
         <hr className="sidebar-divider" />
 
         <div className="sidebar-heading">Interface</div>
 
-        <NavItem label={"My Projects"} url={"/projects"} isactive={false} />
-        <NavItem label={"My Tickets"} url={"/Tickets"} isactive={false} />
+        <NavItem
+          label={"Projects"}
+          url={"/projects"}
+          isactive={false}
+          icon={<i className="fa fa-users" aria-hidden="true"></i>}
+        />
+        <NavItem
+          label={"Tickets"}
+          url={"/Tickets"}
+          isactive={false}
+          icon={<i className="fa fa-ticket" aria-hidden="true"></i>}
+        />
       </ul>
     );
   }
