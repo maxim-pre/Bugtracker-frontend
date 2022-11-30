@@ -12,14 +12,23 @@ class TableBody extends Component {
     return item.id + (column.path || column.key);
   };
 
+  selectRow = (item) => {
+    return (window.location.href = `/projects/${item.id}`);
+  };
+
+  getRowClass = () => {
+    return this.props.clickable ? "table-row clickable" : "table-row";
+  };
+
   render() {
     const { data, columns } = this.props;
     return (
       <tbody className="table-group-divider">
         {data.map((item) => (
-          <tr key={item.id} className="table-row">
+          <tr key={item.id} className={this.getRowClass()}>
             {columns.map((column) => (
               <td
+                onClick={column.click ? () => this.selectRow(item) : null}
                 key={this.createKey(item, column)}
                 className={
                   column.className

@@ -8,20 +8,20 @@ class ProjectTable extends Component {
     {
       path: "name",
       label: "Title",
-      content: (project) => (
-        <Link to={`/projects/${project.id}`}>{project.name}</Link>
-      ),
+      click: true,
     },
     {
       path: "description",
       label: "Description",
+      click: true,
     },
     {
       path: "creator.user.username",
       label: "Creator",
+      click: true,
     },
     {
-      key: "updateDelete",
+      key: "actions",
       className: "text-right text-xs font-weight-bold",
       content: (project) => (
         <React.Fragment>
@@ -49,6 +49,7 @@ class ProjectTable extends Component {
     const { data, onSort, sortColumn } = this.props;
     return (
       <Table
+        clickable={true}
         columns={this.columns}
         data={data}
         onSort={onSort}
