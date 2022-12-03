@@ -4,6 +4,22 @@ import { Link } from "react-router-dom";
 import DropDownLink from "./common/dropdownLink";
 
 class ProjectTable extends Component {
+  renderContributors = (project) => {
+    const developers = [...project.developers];
+
+    return (
+      <ul className="no-bullets">
+        {developers.map((devs) => (
+          <li>{`${devs.developer.user.username} ${
+            devs.developer.user.username === project.creator.user.username
+              ? "(creator)"
+              : ""
+          }`}</li>
+        ))}
+      </ul>
+    );
+  };
+
   columns = [
     {
       path: "name",
@@ -14,15 +30,16 @@ class ProjectTable extends Component {
       path: "description",
       label: "Description",
       click: true,
+      cellClass: "description",
     },
     {
-      path: "creator.user.username",
-      label: "Creator",
+      label: "Contributors",
       click: true,
+      content: (project) => this.renderContributors(project),
     },
     {
       key: "actions",
-      className: "text-right text-xs font-weight-bold",
+      cellClass: "actions text-right",
       content: (project) => (
         <React.Fragment>
           <button className="btn btn-sm edit ">

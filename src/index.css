@@ -65,3 +65,15 @@ tr.table-row {
 .clickable {
   cursor: pointer;
 }
+
+div.actions {
+  width: 4rem;
+}
+
+div.description {
+  width: 40rem;
+}
+
+ul.no-bullets {
+  list-style: none;
+}
