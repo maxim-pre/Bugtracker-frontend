@@ -13,7 +13,7 @@ class Project extends Component {
     developers: [],
     tickets: [],
     ticketSortColumn: { path: "title", order: "asc" },
-    developerSortColumn: { path: "user", order: "asc" },
+    developerSortColumn: { path: "user.username", order: "asc" },
     currentDeveloperPage: 1,
     currentTicketPage: 1,
     pageSize: 4,
@@ -44,17 +44,42 @@ class Project extends Component {
     this.setState({ currentTicketPage: page });
   };
 
+  handleTicketSort = (ticketSortColumn) => {
+    this.setState({ ticketSortColumn });
+  };
+
+  handleDeveloperSort = (developerSortColumn) => {
+    this.setState({ developerSortColumn });
+  };
+
   getPagedData = () => {
     const {
       developers: allDevelopers,
+      developerSortColumn,
       currentDeveloperPage,
       tickets: allTickets,
       currentTicketPage,
+      ticketSortColumn,
       pageSize,
     } = this.state;
 
-    const developers = paginate(allDevelopers, currentDeveloperPage, pageSize);
-    const tickets = paginate(allTickets, currentTicketPage, pageSize);
+    const developersSorted = _.orderBy(
+      allDevelopers,
+      [developerSortColumn.path],
+      [developerSortColumn.order]
+    );
+    const ticketsSorted = _.orderBy(
+      allTickets,
+      [ticketSortColumn.path],
+      [ticketSortColumn.order]
+    );
+
+    const developers = paginate(
+      developersSorted,
+      currentDeveloperPage,
+      pageSize
+    );
+    const tickets = paginate(ticketsSorted, currentTicketPage, pageSize);
     return {
       devCount: allDevelopers.length,
       devData: developers,
@@ -93,6 +118,7 @@ class Project extends Component {
                     <ProjectDevelopersTable
                       data={devData}
                       sortColumn={developerSortColumn}
+                      onSort={this.handleDeveloperSort}
                     />
                   </div>
                   <hr />
@@ -122,6 +148,7 @@ class Project extends Component {
                     <ProjectTicketsTable
                       data={tickData}
                       sortColumn={ticketSortColumn}
+                      onSort={this.handleTicketSort}
                     />
                   </div>
                   <Pagination

@@ -8,8 +8,15 @@ class ProjectTicketsTable extends Component {
     { path: "submitter.user.username", label: "Tickets Author" },
   ];
   render() {
-    const { data, sortColumn } = this.props;
-    return <Table columns={this.columns} data={data} sortColumn={sortColumn} />;
+    const { data, sortColumn, onSort } = this.props;
+    return (
+      <Table
+        columns={this.columns}
+        data={data}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
+    );
   }
 }
 

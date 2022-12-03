@@ -8,8 +8,15 @@ class ProjectDevelopersTable extends Component {
     { path: "user.phone", label: "Phone Number" },
   ];
   render() {
-    const { data, sortColumn } = this.props;
-    return <Table columns={this.columns} data={data} sortColumn={sortColumn} />;
+    const { data, sortColumn, onSort } = this.props;
+    return (
+      <Table
+        columns={this.columns}
+        data={data}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
+    );
   }
 }
 
