@@ -1,27 +1,30 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { createProject } from "../services/projectService";
+import { addDeveloper } from "../services/projectService";
 
-class CreateProjectForm extends Form {
+class AddDeveloperForm extends Form {
   state = {
     data: {
-      name: "",
-      description: "",
+      username: "",
     },
     errors: {},
   };
 
   schema = {
-    name: Joi.string().required().label("Name"),
-    description: Joi.string().required().label("Description"),
+    username: Joi.string().required().label("Username"),
   };
 
   doSubmit = async () => {
+    const project_id = this.props.project_id;
     try {
       const token = localStorage.getItem("token");
-      await createProject(this.state.data, token);
-      window.location.href = "/projects";
+      await addDeveloper(
+        project_id,
+        this.state.data,
+        localStorage.getItem("token")
+      );
+      window.location.href = `/projects/${project_id}`;
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...ex.response.data };
@@ -34,12 +37,11 @@ class CreateProjectForm extends Form {
     const { data, errors } = this.state;
     return (
       <form action="" className="user">
-        {this.renderInput("name", "Name")}
-        {this.renderTextArea("description", "Description")}
-        {this.rederButton("Create")}
+        {this.renderInput("username", "Username")}
+        {this.rederButton("Add")}
       </form>
     );
   }
 }
 
-export default CreateProjectForm;
+export default AddDeveloperForm;

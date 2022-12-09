@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import TextArea from "./textArea";
+import SelectInput from "./selectInput";
+import MultipleSelectInput from "./multipleSelectInput";
 
 class Form extends Component {
   state = {
@@ -46,6 +48,19 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
+  handleArrayChange = ({ currentTarget: input }) => {
+    const data = { ...this.state.data };
+    const options = input.options;
+    const new_data = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        new_data.push(options[i].value);
+      }
+    }
+    data[input.name] = new_data;
+    this.setState({ data });
+  };
+
   rederButton = (label) => {
     return (
       <button
@@ -83,6 +98,30 @@ class Form extends Component {
         onChange={this.handleChange}
         error={errors[name]}
         placeholder={placeholder}
+      />
+    );
+  }
+
+  renderSelectInput(name, label, items, currentSelect) {
+    return (
+      <SelectInput
+        name={name}
+        label={label}
+        items={items}
+        onChange={this.handleChange}
+        currentSelect={currentSelect}
+      />
+    );
+  }
+
+  renderMultipleSelectInput(name, label, items, currentSelected) {
+    return (
+      <MultipleSelectInput
+        name={name}
+        label={label}
+        items={items}
+        onChange={this.handleArrayChange}
+        currentSelected={currentSelected}
       />
     );
   }

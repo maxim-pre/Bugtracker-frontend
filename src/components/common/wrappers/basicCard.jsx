@@ -4,7 +4,7 @@ const BasicCard = (props) => {
   return (
     <div className="card shadow mb-4">
       <div className="card-header py-3">{props.header}</div>
-      <div className="card-body text-center">{props.body}</div>
+      <div className="text-center">{props.body}</div>
     </div>
   );
 };

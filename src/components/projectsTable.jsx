@@ -30,7 +30,7 @@ class ProjectTable extends Component {
       path: "description",
       label: "Description",
       click: true,
-      cellClass: "description",
+      cellClass: "description wrap-text",
     },
     {
       label: "Contributors",
@@ -62,6 +62,10 @@ class ProjectTable extends Component {
     },
   ];
 
+  selectProject = (item) => {
+    return (window.location.href = `/projects/${item.id}`);
+  };
+
   render() {
     const { data, onSort, sortColumn } = this.props;
     return (
@@ -71,6 +75,7 @@ class ProjectTable extends Component {
         data={data}
         onSort={onSort}
         sortColumn={sortColumn}
+        onProjectSelect={this.selectProject}
       />
     );
   }

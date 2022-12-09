@@ -118,10 +118,11 @@ class Projects extends Component {
     const { count, data } = this.getPagedData();
     return (
       <React.Fragment>
+        <h1 className="h3 mb-3 text-gray-800">Dashboard</h1>
         <BasicCard
           header={
             <div className="d-sm-flex align-items-center">
-              <h4 className="header h3 mb-0 text-gray-800">My Projects</h4>
+              <h6 className="m-0 font-weight-bold text-primary">My Projects</h6>
               <div className="filter-button">
                 <DropDownLink
                   items={listgroup}
@@ -150,12 +151,14 @@ class Projects extends Component {
                 />
               </div>
               <hr />
-              <Pagination
-                itemsCount={count}
-                currentPage={currentPage}
-                pageSize={pageSize}
-                onPageChange={this.handlePageChange}
-              />
+              <div className="project-pagination">
+                <Pagination
+                  itemsCount={count}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  onPageChange={this.handlePageChange}
+                />
+              </div>
             </div>
           }
         />

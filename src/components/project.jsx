@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getProjectDevelopers } from "../services/projectService";
+import { getProject, getProjectDevelopers } from "../services/projectService";
 import { getProjectTickets } from "../services/projectService";
 import _ from "lodash";
 import withRouter from "../utils/withrouter";
@@ -8,8 +8,16 @@ import ProjectTicketsTable from "./projectTicketsTable";
 import ProjectDevelopersTable from "./projectDeveloperTable";
 import Pagination from "./common/pagination";
 import { paginate } from "./../utils/paginate";
+import DeveloperModal from "./common/modals/addDeveloperModal";
+import AddDeveloperForm from "./addDeveloperForm";
+import { deleteDeveloper } from "./../services/projectService";
+import { deleteTicket } from "../services/projectService";
+import { toast } from "react-toastify";
+import CreateTicketModal from "./common/modals/addTicketModal";
+import UpdateTicketModal from "./common/modals/updateTicketModal";
 class Project extends Component {
   state = {
+    project: {},
     developers: [],
     tickets: [],
     ticketSortColumn: { path: "title", order: "asc" },
@@ -17,23 +25,21 @@ class Project extends Component {
     currentDeveloperPage: 1,
     currentTicketPage: 1,
     pageSize: 4,
+    developerModal: { show: false },
+    ticketModal: { show: false },
+    updateTicketModal: { ticket: null, show: false },
   };
 
   async componentDidMount() {
     const project_id = this.props.params.project_id;
     //get the tickets
     //get the team members
+    const token = localStorage.getItem("token");
+    const { data: project } = await getProject(project_id, token);
 
-    const { data } = await getProjectTickets(
-      project_id,
-      localStorage.getItem("token")
-    );
-    const tickets = [...data];
-    const { data: developers } = await getProjectDevelopers(
-      project_id,
-      localStorage.getItem("token")
-    );
-    this.setState({ tickets, developers });
+    const { data: tickets } = await getProjectTickets(project_id, token);
+    const { data: developers } = await getProjectDevelopers(project_id, token);
+    this.setState({ tickets, developers, project });
   }
 
   handleDeveloperPageChange = (page) => {
@@ -50,6 +56,50 @@ class Project extends Component {
 
   handleDeveloperSort = (developerSortColumn) => {
     this.setState({ developerSortColumn });
+  };
+
+  handleDeveloperDelete = async (developer) => {
+    const project_id = this.state.project.id;
+    const originalDevelopers = this.state.developers;
+    const developers = originalDevelopers.filter((d) => d.id !== developer.id);
+    this.setState({ developers });
+    try {
+      await deleteDeveloper(
+        project_id,
+        developer.id,
+        localStorage.getItem("token")
+      );
+      toast.success(`${developer.user.username} was kicked from the project`);
+    } catch (ex) {
+      if (ex.response.status === 403) toast.error(ex.response.data.error);
+      this.setState({ developers: originalDevelopers });
+    }
+  };
+
+  handleTicketDelete = async (ticket) => {
+    const project_id = this.state.project.id;
+    const originalTickets = this.state.tickets;
+    const tickets = originalTickets.filter((t) => t.id !== ticket.id);
+    this.setState({ tickets });
+    try {
+      await deleteTicket(project_id, ticket.id, localStorage.getItem("token"));
+      toast.success(`Ticket with title${ticket.title} was deleted`);
+    } catch (ex) {
+      if (ex.response.status === 403) toast.error(ex.response.data.error);
+      this.setState({ tickets: originalTickets });
+    }
+  };
+
+  handleUpdateTicket = (ticket) => {
+    this.setState({ updateTicketModal: { ticket: ticket, show: true } });
+  };
+
+  handleModalClose = () => {
+    this.setState({
+      developerModal: { show: false },
+      ticketModal: { show: false },
+      updateTicketModal: { ticket: null, show: false },
+    });
   };
 
   getPagedData = () => {
@@ -90,24 +140,35 @@ class Project extends Component {
 
   render() {
     const {
-      tickets,
+      developers,
+      project,
       developerSortColumn,
       currentDeveloperPage,
       ticketSortColumn,
       currentTicketPage,
       pageSize,
+      developerModal,
+      ticketModal,
+      updateTicketModal,
     } = this.state;
 
     const { devCount, devData, tickCount, tickData } = this.getPagedData();
     return (
       <React.Fragment>
+        <h1 className="h3 mb-2 text-gray-800">{project.name}</h1>
+        <p className="mb-4 wrap-text">{`description: ${project.description}`}</p>
         <div className="row">
           <div className="col">
             <BasicCard
               header={
                 <div className="d-sm-flex align-items-center">
-                  <h4 className="header h3 mb-0 text-gray-800">Team</h4>
-                  <button className="btn btn-primary btn-sm create-button">
+                  <h6 className="m-0 font-weight-bold text-primary">Team</h6>
+                  <button
+                    className="btn btn-primary btn-sm create-button"
+                    onClick={() =>
+                      this.setState({ developerModal: { show: true } })
+                    }
+                  >
                     New Member
                   </button>
                 </div>
@@ -119,6 +180,8 @@ class Project extends Component {
                       data={devData}
                       sortColumn={developerSortColumn}
                       onSort={this.handleDeveloperSort}
+                      onDelete={this.handleDeveloperDelete}
+                      project_id={project.id}
                     />
                   </div>
                   <hr />
@@ -136,8 +199,13 @@ class Project extends Component {
             <BasicCard
               header={
                 <div className="d-sm-flex align-items-center">
-                  <h4 className="header h3 mb-0 text-gray-800">Tickets</h4>
-                  <button className="btn btn-primary btn-sm create-button">
+                  <h6 className="m-0 font-weight-bold text-primary">Tickets</h6>
+                  <button
+                    className="btn btn-primary btn-sm create-button"
+                    onClick={() =>
+                      this.setState({ ticketModal: { show: true } })
+                    }
+                  >
                     New Ticket
                   </button>
                 </div>
@@ -149,6 +217,9 @@ class Project extends Component {
                       data={tickData}
                       sortColumn={ticketSortColumn}
                       onSort={this.handleTicketSort}
+                      project_id={project.id}
+                      onDelete={this.handleTicketDelete}
+                      onUpdate={this.handleUpdateTicket}
                     />
                   </div>
                   <Pagination
@@ -162,6 +233,24 @@ class Project extends Component {
             />
           </div>
         </div>
+        <DeveloperModal
+          show={developerModal.show}
+          onClose={this.handleModalClose}
+          project_id={project.id}
+        />
+        <CreateTicketModal
+          show={ticketModal.show}
+          onClose={this.handleModalClose}
+          developers={developers}
+          project_id={project.id}
+        />
+        <UpdateTicketModal
+          show={updateTicketModal.show}
+          onClose={this.handleModalClose}
+          developers={developers}
+          project_id={project.id}
+          ticket={updateTicketModal.ticket}
+        />
       </React.Fragment>
     );
   }

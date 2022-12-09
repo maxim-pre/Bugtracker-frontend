@@ -28,7 +28,7 @@ class TableHeader extends Component {
             <th
               key={column.label}
               onClick={() => this.raiseSort(column.path)}
-              className={"text-left text-gray-500 project-col"}
+              className={"text-left  project-col"}
               scope="col"
             >
               {column.label} {this.renderSortIcon(column)}
