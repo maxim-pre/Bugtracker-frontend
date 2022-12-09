@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { updateTicket } from "../services/projectService";
@@ -25,7 +24,7 @@ class EditTicketForm extends Form {
       priority: priority,
       type: type,
       status: status,
-      developers: [1],
+      developers: [],
     };
     this.setState({ data });
   }
@@ -68,7 +67,6 @@ class EditTicketForm extends Form {
   };
 
   render() {
-    const { data, errors } = this.state;
     const developerItems = this.getdeveloperItems(this.props.developers);
     return (
       <form action="" className="user">

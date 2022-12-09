@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { addDeveloper } from "../services/projectService";
@@ -18,7 +17,6 @@ class AddDeveloperForm extends Form {
   doSubmit = async () => {
     const project_id = this.props.project_id;
     try {
-      const token = localStorage.getItem("token");
       await addDeveloper(
         project_id,
         this.state.data,
@@ -34,7 +32,6 @@ class AddDeveloperForm extends Form {
   };
 
   render() {
-    const { data, errors } = this.state;
     return (
       <form action="" className="user">
         {this.renderInput("username", "Username")}

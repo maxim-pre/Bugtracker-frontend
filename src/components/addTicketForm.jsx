@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { createTicket } from "../services/projectService";
@@ -49,7 +48,6 @@ class AddTicketForm extends Form {
   };
 
   render() {
-    const { data, errors } = this.state;
     const developerItems = this.getdeveloperItems(this.props.developers);
     return (
       <form action="" className="user">
