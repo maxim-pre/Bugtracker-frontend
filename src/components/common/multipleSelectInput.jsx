@@ -19,7 +19,9 @@ const MultipleSelectInput = ({
           <option
             value={item.value}
             selected={
-              currentSelected && item.value in currentSelected ? true : false
+              currentSelected && currentSelected.includes(item.value)
+                ? "selected"
+                : false
             }
           >
             {item.label}

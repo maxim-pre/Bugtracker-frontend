@@ -11,20 +11,19 @@ class EditTicketForm extends Form {
       priority: "",
       type: "",
       status: "",
-      developers: [],
     },
     errors: {},
   };
 
   componentDidMount() {
     const { title, description, status, type, priority } = this.props.ticket;
+
     const data = {
       title: title,
       description: description,
       priority: priority,
       type: type,
       status: status,
-      developers: [],
     };
     this.setState({ data });
   }
@@ -35,11 +34,13 @@ class EditTicketForm extends Form {
     priority: Joi.string().required().label("Priority"),
     status: Joi.string().required().label("Status"),
     type: Joi.string().required().label("Type"),
-    developers: Joi.array(),
   };
 
   doSubmit = async () => {
     const { ticket, project_id } = this.props;
+    const data = { ...this.state.data };
+
+    console.log(data);
     try {
       await updateTicket(
         project_id,
@@ -55,19 +56,7 @@ class EditTicketForm extends Form {
     }
   };
 
-  getdeveloperItems = (developers) => {
-    const developerItems = [];
-    for (var i = 0, l = developers.length; i < l; i++) {
-      developerItems.push({
-        value: developers[i].id,
-        label: developers[i].user.username,
-      });
-    }
-    return developerItems;
-  };
-
   render() {
-    const developerItems = this.getdeveloperItems(this.props.developers);
     return (
       <form action="" className="user">
         {this.renderInput("title", "Title")}
@@ -111,11 +100,6 @@ class EditTicketForm extends Form {
             )}
           </div>
         </div>
-        {this.renderMultipleSelectInput(
-          "developers",
-          "Developers",
-          developerItems
-        )}
         {this.rederButton("Update")}
       </form>
     );
