@@ -150,6 +150,7 @@ class Project extends Component {
       developerModal,
       ticketModal,
       updateTicketModal,
+      changeDevelopersModal,
     } = this.state;
 
     const { devCount, devData, tickCount, tickData } = this.getPagedData();

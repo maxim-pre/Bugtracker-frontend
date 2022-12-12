@@ -2,6 +2,7 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { updateTicket } from "../services/projectService";
 import { toast } from "react-toastify";
+import DeveloperModal from "./common/modals/addDeveloperModal";
 
 class EditTicketForm extends Form {
   state = {
@@ -11,12 +12,18 @@ class EditTicketForm extends Form {
       priority: "",
       type: "",
       status: "",
+      developers: [],
     },
     errors: {},
   };
 
   componentDidMount() {
-    const { title, description, status, type, priority } = this.props.ticket;
+    const { title, description, status, type, priority, developers } =
+      this.props.ticket;
+    const reformattedDevelopers = [];
+    for (var i = 0, l = developers.length; i < l; i++) {
+      reformattedDevelopers.push(developers[i]["developer_id"]);
+    }
 
     const data = {
       title: title,
@@ -24,7 +31,9 @@ class EditTicketForm extends Form {
       priority: priority,
       type: type,
       status: status,
+      developers: reformattedDevelopers,
     };
+    console.log(data);
     this.setState({ data });
   }
 
@@ -34,13 +43,18 @@ class EditTicketForm extends Form {
     priority: Joi.string().required().label("Priority"),
     status: Joi.string().required().label("Status"),
     type: Joi.string().required().label("Type"),
+    developers: Joi.array().required(),
   };
 
   doSubmit = async () => {
     const { ticket, project_id } = this.props;
     const data = { ...this.state.data };
+    for (var i = 0, l = data.developers.length; i < l; i++) {
+      data.developers[i] = { developer_id: data.developers[i] };
+    }
+    this.setState({ data });
 
-    console.log(data);
+    console.log(this.state.data);
     try {
       await updateTicket(
         project_id,
@@ -56,7 +70,19 @@ class EditTicketForm extends Form {
     }
   };
 
+  getdeveloperItems = (developers) => {
+    const developerItems = [];
+    for (var i = 0, l = developers.length; i < l; i++) {
+      developerItems.push({
+        value: developers[i].id,
+        label: developers[i].user.username,
+      });
+    }
+    return developerItems;
+  };
+
   render() {
+    const devItems = this.getdeveloperItems(this.props.developers);
     return (
       <form action="" className="user">
         {this.renderInput("title", "Title")}
@@ -99,6 +125,12 @@ class EditTicketForm extends Form {
               this.state.data.status
             )}
           </div>
+          {this.renderMultipleSelectInput(
+            "developers",
+            "Developers",
+            devItems,
+            this.state.data.developers
+          )}
         </div>
         {this.rederButton("Update")}
       </form>

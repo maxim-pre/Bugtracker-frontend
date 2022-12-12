@@ -99,7 +99,7 @@ export function deleteTicket(project_id, ticket_id, token) {
 }
 
 export function updateTicket(project_id, ticket_id, data, token) {
-  return http.put(
+  return http.patch(
     `http://127.0.0.1:8000/bugtracker/projects/${project_id}/tickets/${ticket_id}/`,
     data,
     {
