@@ -88,3 +88,19 @@ ul.no-bullets {
   word-wrap: break-word;
   word-break: break-word;
 }
+
+div.info-card {
+  width: 60%;
+}
+
+div.description-info-card {
+  width: 40%;
+}
+
+div.title-info-card {
+  width: 30%;
+}
+
+div.author-info-card {
+  width: 30%;
+}
