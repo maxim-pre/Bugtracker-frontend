@@ -15,6 +15,7 @@ import { deleteTicket } from "../services/projectService";
 import { toast } from "react-toastify";
 import CreateTicketModal from "./common/modals/addTicketModal";
 import UpdateTicketModal from "./common/modals/updateTicketModal";
+import TicketInfoBox from "./ticketInfoBox";
 class Project extends Component {
   state = {
     project: {},
@@ -28,6 +29,7 @@ class Project extends Component {
     developerModal: { show: false },
     ticketModal: { show: false },
     updateTicketModal: { ticket: null, show: false },
+    currentSelectedTicket: null,
   };
 
   async componentDidMount() {
@@ -94,6 +96,13 @@ class Project extends Component {
     this.setState({ updateTicketModal: { ticket: ticket, show: true } });
   };
 
+  handleSelectTicket = (ticket) => {
+    console.log(ticket);
+    if (ticket === this.state.currentSelectedTicket)
+      return this.setState({ currentSelectedTicket: null });
+    this.setState({ currentSelectedTicket: ticket });
+  };
+
   handleModalClose = () => {
     this.setState({
       developerModal: { show: false },
@@ -150,7 +159,7 @@ class Project extends Component {
       developerModal,
       ticketModal,
       updateTicketModal,
-      changeDevelopersModal,
+      currentSelectedTicket,
     } = this.state;
 
     const { devCount, devData, tickCount, tickData } = this.getPagedData();
@@ -221,6 +230,7 @@ class Project extends Component {
                       project_id={project.id}
                       onDelete={this.handleTicketDelete}
                       onUpdate={this.handleUpdateTicket}
+                      onSelect={this.handleSelectTicket}
                     />
                   </div>
                   <Pagination
@@ -233,6 +243,23 @@ class Project extends Component {
               }
             />
           </div>
+          {currentSelectedTicket && (
+            <div className="row mb-2">
+              <div className="col-7">
+                <TicketInfoBox ticket={currentSelectedTicket} />
+              </div>
+              <div className="col">
+                <BasicCard
+                  header={
+                    <h6 className="m-0 font-weight-bold text-primary">
+                      Comments
+                    </h6>
+                  }
+                  body={<p>helll</p>}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <DeveloperModal
           show={developerModal.show}

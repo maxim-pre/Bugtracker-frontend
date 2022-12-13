@@ -17,14 +17,14 @@ class TableBody extends Component {
   };
 
   render() {
-    const { data, columns, onProjectSelect } = this.props;
+    const { data, columns, onSelect } = this.props;
     return (
       <tbody className="table-group-divider">
         {data.map((item) => (
           <tr key={item.id} className={this.getRowClass()}>
             {columns.map((column) => (
               <td
-                onClick={column.click ? () => onProjectSelect(item) : null}
+                onClick={column.click ? () => onSelect(item) : null}
                 key={this.createKey(item, column)}
                 className={"text-left text-xs font-weight-bold"}
               >

@@ -20,6 +20,15 @@ class UpdateProjectForm extends Form {
     description: Joi.string().required().label("Description"),
   };
 
+  componentDidMount() {
+    const { project } = this.props;
+    const data = {
+      name: project.name,
+      description: project.description,
+    };
+    this.setState({ data });
+  }
+
   doSubmit = async () => {
     try {
       const { project } = this.props;
@@ -36,12 +45,8 @@ class UpdateProjectForm extends Form {
     return (
       <React.Fragment>
         <form action="" id="updateProject" className="user">
-          {this.renderInput("name", "name", "text", "Enter a new project name")}
-          {this.renderTextArea(
-            "description",
-            "description",
-            "Enter a new project description"
-          )}
+          {this.renderInput("name", "Project Title", "text")}
+          {this.renderTextArea("description", "Project Description")}
           {this.rederButton("Save Changes")}
         </form>
         <hr />

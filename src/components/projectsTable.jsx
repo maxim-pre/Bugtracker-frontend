@@ -75,7 +75,7 @@ class ProjectTable extends Component {
         data={data}
         onSort={onSort}
         sortColumn={sortColumn}
-        onProjectSelect={this.selectProject}
+        onSelect={this.selectProject}
       />
     );
   }

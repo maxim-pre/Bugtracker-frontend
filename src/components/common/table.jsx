@@ -1,14 +1,7 @@
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 
-const Table = ({
-  columns,
-  data,
-  onSort,
-  sortColumn,
-  clickable,
-  onProjectSelect,
-}) => {
+const Table = ({ columns, data, onSort, sortColumn, clickable, onSelect }) => {
   return (
     <table className="table table-borderless table-hovered" width="100%">
       <TableHeader columns={columns} onSort={onSort} sortColumn={sortColumn} />
@@ -16,7 +9,7 @@ const Table = ({
         columns={columns}
         data={data}
         clickable={clickable}
-        onProjectSelect={onProjectSelect}
+        onSelect={onSelect}
       />
     </table>
   );
