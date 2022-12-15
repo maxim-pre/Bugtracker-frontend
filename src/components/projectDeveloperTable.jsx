@@ -11,14 +11,16 @@ class ProjectDevelopersTable extends Component {
       key: "actions",
       content: (developer) => (
         <div className="dropdown text-center">
-          <li
-            className="fa fa-ellipsis-v"
+          <button
+            className="btn btn-sm"
             type="button"
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-          ></li>
+          >
+            <li className="fa fa-ellipsis-v"></li>
+          </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a
               className="dropdown-item"

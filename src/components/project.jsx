@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { getProject, getProjectDevelopers } from "../services/projectService";
+import {
+  DeleteComment,
+  getProject,
+  getProjectDevelopers,
+} from "../services/projectService";
 import { getProjectTickets } from "../services/projectService";
 import _ from "lodash";
 import withRouter from "../utils/withrouter";
@@ -12,10 +16,13 @@ import DeveloperModal from "./common/modals/addDeveloperModal";
 import AddDeveloperForm from "./addDeveloperForm";
 import { deleteDeveloper } from "./../services/projectService";
 import { deleteTicket } from "../services/projectService";
+import { getComments } from "../services/projectService";
 import { toast } from "react-toastify";
 import CreateTicketModal from "./common/modals/addTicketModal";
 import UpdateTicketModal from "./common/modals/updateTicketModal";
 import TicketInfoBox from "./ticketInfoBox";
+import CommentForm from "./commentForm";
+import CommentSection from "./common/commentSection";
 class Project extends Component {
   state = {
     project: {},
@@ -30,6 +37,7 @@ class Project extends Component {
     ticketModal: { show: false },
     updateTicketModal: { ticket: null, show: false },
     currentSelectedTicket: null,
+    comments: null,
   };
 
   async componentDidMount() {
@@ -96,11 +104,17 @@ class Project extends Component {
     this.setState({ updateTicketModal: { ticket: ticket, show: true } });
   };
 
-  handleSelectTicket = (ticket) => {
-    console.log(ticket);
+  handleSelectTicket = async (ticket) => {
     if (ticket === this.state.currentSelectedTicket)
-      return this.setState({ currentSelectedTicket: null });
-    this.setState({ currentSelectedTicket: ticket });
+      return this.setState({ currentSelectedTicket: null, comments: null });
+
+    const { data: comments } = await getComments(
+      this.state.project.id,
+      ticket.id,
+      localStorage.getItem("token")
+    );
+
+    this.setState({ currentSelectedTicket: ticket, comments });
   };
 
   handleModalClose = () => {
@@ -109,6 +123,29 @@ class Project extends Component {
       ticketModal: { show: false },
       updateTicketModal: { ticket: null, show: false },
     });
+  };
+
+  handleDeleteComment = async (comment) => {
+    const project_id = this.state.project.id;
+    const ticket_id = this.state.currentSelectedTicket.id;
+    const originalComments = this.state.comments;
+    const comments = originalComments.filter((c) => c.id !== comment.id);
+    this.setState({ comments });
+    try {
+      await DeleteComment(
+        project_id,
+        ticket_id,
+        comment.id,
+        localStorage.getItem("token")
+      );
+    } catch (ex) {
+      if (ex.response.status === 403) toast.error(ex.response.data.error);
+      this.setState({ comments: originalComments });
+    }
+  };
+
+  handleAddComment = (comments) => {
+    this.setState({ comments });
   };
 
   getPagedData = () => {
@@ -160,6 +197,7 @@ class Project extends Component {
       ticketModal,
       updateTicketModal,
       currentSelectedTicket,
+      comments,
     } = this.state;
 
     const { devCount, devData, tickCount, tickData } = this.getPagedData();
@@ -255,7 +293,19 @@ class Project extends Component {
                       Comments
                     </h6>
                   }
-                  body={<p>helll</p>}
+                  body={
+                    <div className="m-3">
+                      <CommentSection
+                        comments={comments}
+                        onDelete={this.handleDeleteComment}
+                      />
+                      <CommentForm
+                        project_id={project.id}
+                        ticket_id={currentSelectedTicket.id}
+                        onCreateComment={this.handleAddComment}
+                      />
+                    </div>
+                  }
                 />
               </div>
             </div>

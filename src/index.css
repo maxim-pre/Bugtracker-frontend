@@ -45,7 +45,15 @@ tr button.edit {
   display: none;
 }
 
+div button.edit {
+  display: none;
+}
+
 tr:hover button.edit {
+  display: initial;
+}
+
+div.comment-row:hover button.edit {
   display: initial;
 }
 
@@ -93,14 +101,10 @@ div.info-card {
   width: 60%;
 }
 
-div.description-info-card {
-  width: 40%;
-}
-
-div.title-info-card {
-  width: 30%;
-}
-
-div.author-info-card {
-  width: 30%;
+div.scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+  height: 15em;
+  width: 100%;
 }

@@ -107,3 +107,25 @@ export function updateTicket(project_id, ticket_id, data, token) {
     }
   );
 }
+
+export function getComments(project_id, ticket_id, token) {
+  return http.get(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/tickets/${ticket_id}/comments/`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
+
+export function DeleteComment(project_id, ticket_id, comment_id, token) {
+  return http.delete(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/tickets/${ticket_id}/comments/${comment_id}/`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
+
+export function CreateComment(project_id, ticket_id, data, token) {
+  return http.post(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/tickets/${ticket_id}/comments/`,
+    data,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
