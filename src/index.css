@@ -108,3 +108,11 @@ div.scroll {
   height: 15em;
   width: 100%;
 }
+
+div.account-form {
+  width: 50%;
+}
+
+body {
+  min-height: 100vh;
+}

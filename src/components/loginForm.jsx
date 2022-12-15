@@ -38,7 +38,7 @@ class LoginForm extends Form {
     return (
       <FormBackground>
         <div className="text-center">
-          <h1 className="h4 text-gray-900 mb-4">Login</h1>
+          <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
         </div>
         <form action="" className="user">
           {this.renderInput("username", "username")}

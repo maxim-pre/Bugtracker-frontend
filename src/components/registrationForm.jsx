@@ -43,10 +43,22 @@ class RegistrationForm extends Form {
           <h1 className="h4 text-gray-900 mb-4">Create an account</h1>
         </div>
         <form action="" className="user">
-          {this.renderInput("firstName", "First Name")}
-          {this.renderInput("lastName", "Last Name")}
-          {this.renderInput("username", "username")}
-          {this.renderInput("password", "Password", "password")}
+          <div className="row">
+            <div className="col">
+              {this.renderInput("firstName", "First Name")}
+            </div>
+            <div className="col">
+              {this.renderInput("lastName", "Last Name")}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              {this.renderInput("username", "username")}
+            </div>
+            <div className="col">
+              {this.renderInput("password", "Password", "password")}
+            </div>
+          </div>
           {this.renderInput("email", "Email")}
 
           {this.rederButton("Submit")}

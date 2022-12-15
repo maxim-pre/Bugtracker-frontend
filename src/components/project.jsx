@@ -13,7 +13,6 @@ import ProjectDevelopersTable from "./projectDeveloperTable";
 import Pagination from "./common/pagination";
 import { paginate } from "./../utils/paginate";
 import DeveloperModal from "./common/modals/addDeveloperModal";
-import AddDeveloperForm from "./addDeveloperForm";
 import { deleteDeveloper } from "./../services/projectService";
 import { deleteTicket } from "../services/projectService";
 import { getComments } from "../services/projectService";

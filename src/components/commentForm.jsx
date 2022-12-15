@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { createProject } from "../services/projectService";
 import { CreateComment } from "./../services/projectService";
 import { getComments } from "../services/projectService";
 
@@ -14,7 +13,7 @@ class CommentForm extends Form {
   };
 
   schema = {
-    comment: Joi.string().required().label("Comment"),
+    comment: Joi.string().label("Comment"),
   };
 
   doSubmit = async () => {
@@ -34,6 +33,12 @@ class CommentForm extends Form {
         localStorage.getItem("token")
       );
       this.props.onCreateComment(comments);
+      this.setState({
+        data: {
+          comment: "",
+        },
+        errors: {},
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...ex.response.data };

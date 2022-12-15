@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { getUser } from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import TopBar from "./components/topbar";
@@ -9,12 +9,10 @@ import Logout from "./components/logout";
 import RegistrationForm from "./components/registrationForm";
 import Projects from "./components/projects";
 import Project from "./components/project";
-import CreateProjectForm from "./components/createProjectFrom";
 import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import { Toast } from "react-bootstrap";
-import UpdateProjectForm from "./components/updateProjectForm";
+import { Nav } from "react-bootstrap";
 class App extends Component {
   state = {};
 
@@ -26,6 +24,19 @@ class App extends Component {
   }
 
   render() {
+    if (!this.state.user) {
+      return (
+        <React.Fragment>
+          <div className="content">
+            <Routes>
+              <Route path="*" element={<LoginForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegistrationForm />} />
+            </Routes>
+          </div>
+        </React.Fragment>
+      );
+    }
     return (
       <React.Fragment>
         <ToastContainer />
@@ -36,24 +47,12 @@ class App extends Component {
               <TopBar user={this.state.user} />
               <div className="container-fluid">
                 <Routes>
-                  <Route path="/login" element={<LoginForm />} />
                   <Route path="/logout" element={<Logout />} />
-                  <Route path="/register" element={<RegistrationForm />} />
                   <Route
                     path="/projects"
                     element={<Projects user={this.state.user} />}
                   />
                   <Route path="/projects/:project_id" element={<Project />} />
-
-                  <Route
-                    path="/createproject"
-                    element={<CreateProjectForm />}
-                  />
-                  <Route
-                    path="/updateproject"
-                    element={<UpdateProjectForm />}
-                  />
-
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
