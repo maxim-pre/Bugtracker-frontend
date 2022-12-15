@@ -45,13 +45,13 @@ class LoginForm extends Form {
           {this.renderInput("password", "Password", "password")}
           {this.rederButton("Submit")}
         </form>
-        <hr />
-        <div class="text-left">
+        <hr className="form-divider" />
+        <div class="text-center">
           <Link class="small" to="/patch_password">
             Forgot Password?
           </Link>
         </div>
-        <div class="text-left">
+        <div class="text-center">
           <Link class="small" to="/register">
             Create an Account!
           </Link>

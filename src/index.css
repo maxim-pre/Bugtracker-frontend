@@ -116,3 +116,9 @@ div.account-form {
 body {
   min-height: 100vh;
 }
+
+hr.form-divider {
+  border-top: 1px solid #5a5a5a;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

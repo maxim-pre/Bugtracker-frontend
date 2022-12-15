@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { register } from "../services/userService";
+import { Link } from "react-router-dom";
+import { login } from "../services/authService";
 import FormBackground from "./common/wrappers/formBackground";
 class RegistrationForm extends Form {
   state = {
@@ -26,7 +28,12 @@ class RegistrationForm extends Form {
   doSubmit = async () => {
     try {
       await register(this.state.data);
-      window.location.href = "/dashboard";
+      const { data: jwt } = await login(
+        this.state.data.username,
+        this.state.data.password
+      );
+      localStorage.setItem("token", jwt.access);
+      window.location.href = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...ex.response.data };
@@ -63,6 +70,12 @@ class RegistrationForm extends Form {
 
           {this.rederButton("Submit")}
         </form>
+        <hr className="form-divider" />
+        <div class="text-center">
+          <Link class="small" to="/login">
+            Back to Login
+          </Link>
+        </div>
       </FormBackground>
     );
   }
