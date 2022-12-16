@@ -41,11 +41,11 @@ class App extends Component {
       <React.Fragment>
         <ToastContainer />
         <div id="wrapper">
-          <SideBar />
+          <SideBar user={this.state.user} />
           <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
-              <TopBar user={this.state.user} />
-              <div className="container-fluid">
+              {/* <TopBar user={this.state.user} /> */}
+              <div className="container-fluid mt-4">
                 <Routes>
                   <Route path="/logout" element={<Logout />} />
                   <Route
@@ -53,7 +53,10 @@ class App extends Component {
                     element={<Projects user={this.state.user} />}
                   />
                   <Route path="/projects/:project_id" element={<Project />} />
-                  <Route path="*" element={<NotFound />} />
+                  <Route
+                    path="*"
+                    element={<Projects user={this.state.user} />}
+                  />
                 </Routes>
               </div>
             </div>
