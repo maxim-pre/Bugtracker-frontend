@@ -11,11 +11,12 @@ import CreateProjectModal from "./common/modals/createProjectModal";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import ListGroup from "./common/listGroup";
 class Projects extends Component {
   state = {
     projects: [],
     currentPage: 1,
-    pageSize: 6,
+    pageSize: 4,
     sortColumn: { path: "name", order: "asc" },
     listgroup: [
       { name: "All Projects", id: "" },
@@ -31,7 +32,10 @@ class Projects extends Component {
     try {
       const { data } = await getProjects(localStorage.getItem("token"));
       const projects = [...data];
-      this.setState({ projects });
+      console.log(projects);
+      const listgroup = this.getListGroupCount(projects, this.props.user);
+      console.log(listgroup);
+      this.setState({ projects, listgroup });
     } catch (ex) {}
   }
 
@@ -85,6 +89,20 @@ class Projects extends Component {
     return allProjects;
   };
 
+  getListGroupCount = (allProjects, user) => {
+    const listgroup = this.state.listgroup;
+    listgroup[1]["count"] = allProjects.filter(
+      (p) => p.creator.user.username === user.username
+    ).length;
+
+    listgroup[2]["count"] = allProjects.filter(
+      (p) => p.creator.user.username !== user.username
+    ).length;
+
+    listgroup[0]["count"] = allProjects.length;
+    return listgroup;
+  };
+
   getPagedData = () => {
     const {
       projects: allProjects,
@@ -119,18 +137,15 @@ class Projects extends Component {
     return (
       <React.Fragment>
         <h1 className="h3 mb-3 text-gray-800">Dashboard</h1>
+        <ListGroup
+          items={listgroup}
+          onChange={this.handleListGroupChange}
+          currentItem={this.state.currentListGroup}
+        />
         <BasicCard
           header={
             <div className="d-sm-flex align-items-center">
               <h6 className="m-0 font-weight-bold text-primary">My Projects</h6>
-              <div className="filter-button">
-                <DropDownLink
-                  items={listgroup}
-                  onChange={this.handleListGroupChange}
-                  className={"btn btn-secondary btn-sm dropdown-toggle"}
-                  label={"Filters"}
-                />
-              </div>
               <button
                 className="btn btn-primary btn-sm create-button"
                 onClick={() => this.setState({ createModal: { show: true } })}

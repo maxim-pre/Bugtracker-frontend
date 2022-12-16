@@ -5,35 +5,48 @@ import NavItem from "./common/navItem";
 class SideBar extends Component {
   state = {};
   render() {
+    const { user } = this.props;
     return (
       <ul
-        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
         id="accordionSidebar"
       >
-        <hr className="sidebar-divider my-0" />
-
         <NavItem
-          label={"Dashboard"}
-          url={"/dashboarad"}
+          label={"Tracker"}
+          url={"/projects"}
           isactive={true}
-          icon={<i className="fa fa-tachometer" aria-hidden="true"></i>}
+          icon={<i class="fa fa-bug" aria-hidden="true"></i>}
         />
 
-        <hr className="sidebar-divider" />
+        <hr className="sidebar-dividers" />
 
         <div className="sidebar-heading">Interface</div>
 
         <NavItem
-          label={"Projects"}
+          label={"DashBoard"}
           url={"/projects"}
           isactive={false}
-          icon={<i className="fa fa-users" aria-hidden="true"></i>}
+          icon={<i class="fa fa-desktop" aria-hidden="true"></i>}
         />
         <NavItem
           label={"Tickets"}
           url={"/Tickets"}
           isactive={false}
           icon={<i className="fa fa-ticket" aria-hidden="true"></i>}
+        />
+        <hr className="sidebar-dividers" />
+        <div className="sidebar-heading">User actions</div>
+        <NavItem
+          label={"profile"}
+          url="/profile"
+          isactive={false}
+          icon={<i class="fa fa-user" aria-hidden="true"></i>}
+        />
+        <NavItem
+          label={"Logout"}
+          url={"/logout"}
+          isactive={false}
+          icon={<i class="fa fa-sign-out" aria-hidden="true"></i>}
         />
       </ul>
     );

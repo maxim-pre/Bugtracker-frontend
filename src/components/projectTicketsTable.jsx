@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import Table from "./common/table";
 class ProjectTicketsTable extends Component {
   columns = [
-    { path: "title", label: "Tickets Title", click: true },
-    { path: "description", label: "description", click: true },
+    {
+      path: "title",
+      label: "Tickets Title",
+      click: true,
+    },
     { path: "submitter.user.username", label: "Tickets Author", click: true },
+    { path: "last_updated", label: "Last Updated", click: true },
     {
       key: "actions",
+      cellClass: "actions text-right",
       content: (ticket) => (
         <div className="dropdown text-center">
           <button

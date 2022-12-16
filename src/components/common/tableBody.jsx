@@ -26,7 +26,11 @@ class TableBody extends Component {
               <td
                 onClick={column.click ? () => onSelect(item) : null}
                 key={this.createKey(item, column)}
-                className={"text-left text-xs font-weight-bold"}
+                className={
+                  column.textClass
+                    ? column.textClass
+                    : "text-left text-xs text-gray-900"
+                }
               >
                 <div className={column.cellClass}>
                   {this.renderCell(item, column)}

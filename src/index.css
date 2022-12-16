@@ -84,6 +84,8 @@ div.description {
 
 ul.no-bullets {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .project-pagination {
@@ -119,6 +121,16 @@ body {
 
 hr.form-divider {
   border-top: 1px solid #5a5a5a;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+div ul li.project-filter-options {
+  width: 30%;
+}
+
+hr.sidebar-dividers {
+  border-top: 1px solid white;
   margin-left: 1rem;
   margin-right: 1rem;
 }
