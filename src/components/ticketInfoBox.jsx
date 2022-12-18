@@ -1,24 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
 class TicketInfoBox extends Component {
-  getStatusOptions = (att) => {
-    if (att === "O") return "Open";
-    if (att === "S") return "Started";
-    if (att === "C") return "Closed";
-    return null;
-  };
-  getPriorityOptions = (att) => {
-    if (att === "L") return "Low";
-    if (att === "M") return "Medium";
-    if (att === "H") return "High";
-    return null;
-  };
-  getTypeOptions = (att) => {
-    if (att === "B") return "Bug";
-    if (att === "I") return "Issue";
-    if (att === "FR") return "Feature Request";
-    return null;
-  };
   render() {
     const { ticket } = this.props;
 
@@ -50,19 +32,19 @@ class TicketInfoBox extends Component {
             <div className="col">
               <div className="text-xs">Status</div>
               <div className="m-0 text-xs text-primary wrap-text">
-                {this.getStatusOptions(ticket.status)}
+                {ticket.status}
               </div>
             </div>
             <div className="col text-center">
               <div className="text-xs">Priority</div>
               <div className="m-0 text-xs text-primary wrap-text">
-                {this.getPriorityOptions(ticket.priority)}
+                {ticket.priority}
               </div>
             </div>
             <div className="col-6">
               <div className="text-xs">Type</div>
               <div className="m-0 text-xs text-primary wrap-text">
-                {this.getTypeOptions(ticket.type)}
+                {ticket.type}
               </div>
             </div>
           </div>

@@ -23,6 +23,12 @@ export function getProjectDevelopers(project_id, token) {
   );
 }
 
+export function getTickets(token) {
+  return http.get(`http://127.0.0.1:8000/bugtracker/tickets/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 // returns a list of ticket objects who are assigned to a given project
 export function getProjectTickets(project_id, token) {
   return http.get(

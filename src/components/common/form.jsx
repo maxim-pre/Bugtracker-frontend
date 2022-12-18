@@ -103,6 +103,7 @@ class Form extends Component {
   }
 
   renderSelectInput(name, label, items, currentSelect) {
+    const { errors } = this.state;
     return (
       <SelectInput
         name={name}
@@ -110,11 +111,13 @@ class Form extends Component {
         items={items}
         onChange={this.handleChange}
         currentSelect={currentSelect}
+        error={errors[name]}
       />
     );
   }
 
   renderMultipleSelectInput(name, label, items, currentSelected) {
+    const { errors } = this.state;
     return (
       <MultipleSelectInput
         name={name}
@@ -122,6 +125,7 @@ class Form extends Component {
         items={items}
         onChange={this.handleArrayChange}
         currentSelected={currentSelected}
+        error={errors[name]}
       />
     );
   }

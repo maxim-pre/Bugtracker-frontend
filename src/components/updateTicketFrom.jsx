@@ -43,7 +43,7 @@ class EditTicketForm extends Form {
     priority: Joi.string().required().label("Priority"),
     status: Joi.string().required().label("Status"),
     type: Joi.string().required().label("Type"),
-    developers: Joi.array().required(),
+    developers: Joi.array().min(1).required(),
   };
 
   doSubmit = async () => {

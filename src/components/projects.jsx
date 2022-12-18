@@ -11,7 +11,7 @@ import CreateProjectModal from "./common/modals/createProjectModal";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import ListGroup from "./common/listGroup";
+import ListGroup from "./common/listGroupHorizontal";
 class Projects extends Component {
   state = {
     projects: [],
@@ -118,7 +118,11 @@ class Projects extends Component {
       currentListGroup &&
       this.getFilteredProjects(allProjects, currentListGroup, user);
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted = _.orderBy(
+      filtered,
+      [(project) => _.get(project, sortColumn.path).toLowerCase()],
+      [sortColumn.order]
+    );
     const projects = paginate(sorted, currentPage, pageSize);
 
     return { count: filtered.length, data: projects };

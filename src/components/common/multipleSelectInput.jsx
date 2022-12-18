@@ -4,6 +4,7 @@ const MultipleSelectInput = ({
   label,
   onChange,
   currentSelected,
+  error,
 }) => {
   return (
     <div className="form-group">
@@ -28,6 +29,7 @@ const MultipleSelectInput = ({
           </option>
         ))}
       </select>
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };

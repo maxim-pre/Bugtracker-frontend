@@ -160,12 +160,12 @@ class Project extends Component {
 
     const developersSorted = _.orderBy(
       allDevelopers,
-      [developerSortColumn.path],
+      [(developer) => _.get(developer, developerSortColumn.path).toLowerCase()],
       [developerSortColumn.order]
     );
     const ticketsSorted = _.orderBy(
       allTickets,
-      [ticketSortColumn.path],
+      [(ticket) => _.get(ticket, ticketSortColumn.path).toLowerCase()],
       [ticketSortColumn.order]
     );
 
@@ -232,12 +232,14 @@ class Project extends Component {
                     />
                   </div>
                   <hr />
-                  <Pagination
-                    itemsCount={devCount}
-                    currentPage={currentDeveloperPage}
-                    pageSize={pageSize}
-                    onPageChange={this.handleDeveloperPageChange}
-                  />
+                  <div className="project-pagination">
+                    <Pagination
+                      itemsCount={devCount}
+                      currentPage={currentDeveloperPage}
+                      pageSize={pageSize}
+                      onPageChange={this.handleDeveloperPageChange}
+                    />
+                  </div>
                 </div>
               }
             />
@@ -270,12 +272,14 @@ class Project extends Component {
                       onSelect={this.handleSelectTicket}
                     />
                   </div>
-                  <Pagination
-                    itemsCount={tickCount}
-                    currentPage={currentTicketPage}
-                    pageSize={pageSize}
-                    onPageChange={this.handleTicketPageChange}
-                  />
+                  <div className="project-pagination">
+                    <Pagination
+                      itemsCount={tickCount}
+                      currentPage={currentTicketPage}
+                      pageSize={pageSize}
+                      onPageChange={this.handleTicketPageChange}
+                    />
+                  </div>
                 </div>
               }
             />
