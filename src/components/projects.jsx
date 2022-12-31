@@ -5,13 +5,12 @@ import { paginate } from "../utils/paginate";
 import BasicCard from "./common/wrappers/basicCard";
 import Pagination from "./common/pagination";
 import ProjectTable from "./projectsTable";
-import DropDownLink from "./common/dropdownLink";
 import UpdateProjectModal from "./common/modals/updateProjectModal";
 import CreateProjectModal from "./common/modals/createProjectModal";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import ListGroup from "./common/listGroupHorizontal";
+
 class Projects extends Component {
   state = {
     projects: [],
@@ -32,9 +31,7 @@ class Projects extends Component {
     try {
       const { data } = await getProjects(localStorage.getItem("token"));
       const projects = [...data];
-      console.log(projects);
       const listgroup = this.getListGroupCount(projects, this.props.user);
-      console.log(listgroup);
       this.setState({ projects, listgroup });
     } catch (ex) {}
   }

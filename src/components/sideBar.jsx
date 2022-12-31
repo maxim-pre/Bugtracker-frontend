@@ -34,6 +34,14 @@ class SideBar extends Component {
           isactive={false}
           icon={<i className="fa fa-ticket" aria-hidden="true"></i>}
         />
+        {user.is_staff && (
+          <NavItem
+            label={"Administration"}
+            url={"/admin"}
+            isactive={false}
+            icon={<i className="fa fa-database" aria-hidden="true"></i>}
+          />
+        )}
         <hr className="sidebar-dividers" />
         <div className="sidebar-heading">User actions</div>
         <NavItem

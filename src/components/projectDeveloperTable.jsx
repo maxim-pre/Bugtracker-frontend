@@ -5,8 +5,9 @@ import { deleteDeveloper } from "./../services/projectService";
 import { toast } from "react-toastify";
 class ProjectDevelopersTable extends Component {
   columns = [
-    { path: "user.username", label: "Username" },
-    { path: "user.email", label: "Email" },
+    { path: "developer.user.username", label: "Username" },
+    { path: "developer.user.email", label: "Email" },
+    { path: "role", label: "Role" },
     {
       key: "actions",
       content: (developer) => (

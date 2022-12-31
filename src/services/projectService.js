@@ -71,7 +71,7 @@ export function updateProject(project_id, data, token) {
 export function addDeveloper(project_id, data, token) {
   return http.post(
     `http://127.0.0.1:8000/bugtracker/projects/${project_id}/developers/`,
-    { username: data.username },
+    data,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 }

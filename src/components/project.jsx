@@ -28,7 +28,7 @@ class Project extends Component {
     developers: [],
     tickets: [],
     ticketSortColumn: { path: "title", order: "asc" },
-    developerSortColumn: { path: "user.username", order: "asc" },
+    developerSortColumn: { path: "developer.user.username", order: "asc" },
     currentDeveloperPage: 1,
     currentTicketPage: 1,
     pageSize: 4,
@@ -70,12 +70,14 @@ class Project extends Component {
   handleDeveloperDelete = async (developer) => {
     const project_id = this.state.project.id;
     const originalDevelopers = this.state.developers;
-    const developers = originalDevelopers.filter((d) => d.id !== developer.id);
+    const developers = originalDevelopers.filter(
+      (d) => d.developer.id !== developer.developer.id
+    );
     this.setState({ developers });
     try {
       await deleteDeveloper(
         project_id,
-        developer.id,
+        developer.developer.id,
         localStorage.getItem("token")
       );
       toast.success(`${developer.user.username} was kicked from the project`);
@@ -147,6 +149,15 @@ class Project extends Component {
     this.setState({ comments });
   };
 
+  handleActivateAddDeveloperModal = () => {
+    const currentProjectDeveloper = this.state.developers.filter(
+      (d) => d.developer.user.id === this.props.user.id
+    );
+    if (currentProjectDeveloper[0].admin_permission === false)
+      return toast.error("you need admin permissions to perform this action");
+    return this.setState({ developerModal: { show: true } });
+  };
+
   getPagedData = () => {
     const {
       developers: allDevelopers,
@@ -212,9 +223,7 @@ class Project extends Component {
                   <h6 className="m-0 font-weight-bold text-primary">Team</h6>
                   <button
                     className="btn btn-primary btn-sm create-button"
-                    onClick={() =>
-                      this.setState({ developerModal: { show: true } })
-                    }
+                    onClick={this.handleActivateAddDeveloperModal}
                   >
                     New Member
                   </button>

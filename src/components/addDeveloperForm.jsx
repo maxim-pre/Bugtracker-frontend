@@ -6,12 +6,14 @@ class AddDeveloperForm extends Form {
   state = {
     data: {
       username: "",
+      role: "Developer",
     },
     errors: {},
   };
 
   schema = {
     username: Joi.string().required().label("Username"),
+    role: Joi.string().required().label("Role"),
   };
 
   doSubmit = async () => {
@@ -35,6 +37,12 @@ class AddDeveloperForm extends Form {
     return (
       <form action="" className="user">
         {this.renderInput("username", "Username")}
+        {this.renderSelectInput("role", "Role", [
+          { value: "Developer", label: "Developer" },
+          { value: "Submitter", label: "Sumbitter" },
+          { value: "Project Manager", label: "Project Manager" },
+          { value: "Admin", label: "Admin" },
+        ])}
         {this.rederButton("Add")}
       </form>
     );

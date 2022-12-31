@@ -2,6 +2,7 @@ import Joi from "joi-browser";
 import Form from "./common/form";
 import { updateTicket } from "../services/projectService";
 import { toast } from "react-toastify";
+import { getFirstLetters } from "../utils/getFirstLetters";
 import DeveloperModal from "./common/modals/addDeveloperModal";
 
 class EditTicketForm extends Form {
@@ -28,12 +29,11 @@ class EditTicketForm extends Form {
     const data = {
       title: title,
       description: description,
-      priority: priority,
-      type: type,
-      status: status,
       developers: reformattedDevelopers,
+      type: getFirstLetters(type),
+      status: getFirstLetters(status),
+      priority: getFirstLetters(priority),
     };
-    console.log(data);
     this.setState({ data });
   }
 
@@ -48,13 +48,6 @@ class EditTicketForm extends Form {
 
   doSubmit = async () => {
     const { ticket, project_id } = this.props;
-    const data = { ...this.state.data };
-    for (var i = 0, l = data.developers.length; i < l; i++) {
-      data.developers[i] = { developer_id: data.developers[i] };
-    }
-    this.setState({ data });
-
-    console.log(this.state.data);
     try {
       await updateTicket(
         project_id,

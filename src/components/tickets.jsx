@@ -6,19 +6,23 @@ import Pagination from "./common/pagination";
 import _ from "lodash";
 import { paginate } from "./../utils/paginate";
 import SearchBox from "./common/searchBox";
+import { PieChart } from "recharts";
+import SimplePieChart from "./common/pieChart";
 
 class Tickets extends Component {
   state = {
     tickets: [],
     ticketSortColumn: { path: "title", order: "asc" },
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 6,
     searchQuery: "",
+    chartData: [],
   };
 
   async componentDidMount() {
     const { data: tickets } = await getTickets(localStorage.getItem("token"));
-    this.setState({ tickets });
+    const data = this.getChartData(tickets);
+    this.setState({ tickets, chartData: data });
   }
 
   handleTicketSort = (ticketSortColumn) => {
@@ -31,6 +35,51 @@ class Tickets extends Component {
 
   handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
+  };
+
+  getChartData = (tickets) => {
+    const data = {
+      statusData: [
+        {
+          name: "open",
+          value: tickets.filter((t) => t.status === "open").length,
+        },
+        {
+          name: "started",
+          value: tickets.filter((t) => t.status === "started").length,
+        },
+        {
+          name: "closed",
+          value: tickets.filter((t) => t.status === "closed").length,
+        },
+      ],
+      typeData: [
+        {
+          name: "issue",
+          value: tickets.filter((t) => t.type === "issue").length,
+        },
+        { name: "bug", value: tickets.filter((t) => t.type === "bug").length },
+        {
+          name: "feature request",
+          value: tickets.filter((t) => t.type === "feature request").length,
+        },
+      ],
+      priorityData: [
+        {
+          name: "low",
+          value: tickets.filter((t) => t.priority === "low").length,
+        },
+        {
+          name: "medium",
+          value: tickets.filter((t) => t.priority === "medium").length,
+        },
+        {
+          name: "high",
+          value: tickets.filter((t) => t.priority === "high").length,
+        },
+      ],
+    };
+    return data;
   };
 
   getPagedData = () => {
@@ -100,6 +149,50 @@ class Tickets extends Component {
                     />
                   </div>
                 </React.Fragment>
+              }
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <BasicCard
+              header={
+                <h6 className="m-0 font-weight-bold text-primary">
+                  Tickets by type
+                </h6>
+              }
+              body={
+                <div className="mb-3">
+                  <SimplePieChart data={this.state.chartData.typeData} />
+                </div>
+              }
+            />
+          </div>
+          <div className="col">
+            <BasicCard
+              header={
+                <h6 className="m-0 font-weight-bold text-primary">
+                  Tickets by status
+                </h6>
+              }
+              body={
+                <div className="mb-3">
+                  <SimplePieChart data={this.state.chartData.statusData} />
+                </div>
+              }
+            />
+          </div>
+          <div className="col">
+            <BasicCard
+              header={
+                <h6 className="m-0 font-weight-bold text-primary">
+                  Tickets by priority
+                </h6>
+              }
+              body={
+                <div className="mb-3">
+                  <SimplePieChart data={this.state.chartData.priorityData} />
+                </div>
               }
             />
           </div>

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { getUser } from "./services/authService";
 import { ToastContainer } from "react-toastify";
-import TopBar from "./components/topbar";
 import SideBar from "./components/sideBar";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
@@ -10,10 +9,10 @@ import RegistrationForm from "./components/registrationForm";
 import Projects from "./components/projects";
 import Tickets from "./components/tickets";
 import Project from "./components/project";
-import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import { Nav } from "react-bootstrap";
+import Profile from "./components/profile";
+import Admin from "./components/admin";
 class App extends Component {
   state = {};
 
@@ -25,28 +24,31 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.user) {
+    const user = this.state.user;
+    if (user) {
       return (
         <React.Fragment>
           <ToastContainer />
           <div id="wrapper">
-            <SideBar user={this.state.user} />
+            <SideBar user={user} />
             <div id="content-wrapper" className="d-flex flex-column">
               <div id="content">
-                {/* <TopBar user={this.state.user} /> */}
+                {/* <TopBar user={user} /> */}
                 <div className="container-fluid mt-4">
                   <Routes>
-                    <Route path="/logout" element={<Logout />} />
                     <Route path="/tickets" element={<Tickets />} />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/admin" element={<Admin user={user} />} />
                     <Route
                       path="/projects"
-                      element={<Projects user={this.state.user} />}
+                      element={<Projects user={user} />}
                     />
-                    <Route path="/projects/:project_id" element={<Project />} />
                     <Route
-                      path="*"
-                      element={<Projects user={this.state.user} />}
+                      path="/projects/:project_id"
+                      element={<Project user={user} />}
                     />
+                    <Route path="*" element={<Projects user={user} />} />
                   </Routes>
                 </div>
               </div>
