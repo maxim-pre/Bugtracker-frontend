@@ -1,7 +1,7 @@
 const ListGroup = ({ items, currentItem, onChange }) => {
   return (
     <div className="mb-3">
-      <ul class="list-group list-group-horizontal">
+      <ul className="list-group list-group-horizontal">
         {items.map((item) => (
           <li
             key={item.name}
@@ -14,7 +14,7 @@ const ListGroup = ({ items, currentItem, onChange }) => {
           >
             {item.name}
             <span
-              class={
+              className={
                 item === currentItem
                   ? "badge badge-pill"
                   : "badge badge-primary badge-pill"

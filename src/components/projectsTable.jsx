@@ -10,9 +10,9 @@ class ProjectTable extends Component {
     return (
       <ul className="no-bullets">
         {developers.map((devs) => (
-          <li>{`${devs.developer.user.username} ${
+          <li>{`${devs.developer.user.username}${
             devs.developer.user.username === project.creator.user.username
-              ? "(creator)"
+              ? "-creator"
               : ""
           }`}</li>
         ))}

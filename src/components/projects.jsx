@@ -147,7 +147,7 @@ class Projects extends Component {
     const { count, data } = this.getPagedData();
     return (
       <React.Fragment>
-        <h1 className="h3 mb-3 text-gray-800">Dashboard</h1>
+        <h1 className="h3 mb-3 text-gray-800">{`Dashboard - ${this.props.user.username}`}</h1>
 
         <ListGroup
           items={listgroup}

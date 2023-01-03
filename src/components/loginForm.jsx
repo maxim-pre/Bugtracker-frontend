@@ -46,13 +46,8 @@ class LoginForm extends Form {
           {this.rederButton("Submit")}
         </form>
         <hr className="form-divider" />
-        <div class="text-center">
-          <Link class="small" to="/patch_password">
-            Forgot Password?
-          </Link>
-        </div>
-        <div class="text-center">
-          <Link class="small" to="/register">
+        <div className="text-center">
+          <Link className="small" to="/register">
             Create an Account!
           </Link>
         </div>
