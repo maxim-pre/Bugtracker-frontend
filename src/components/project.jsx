@@ -22,10 +22,12 @@ import UpdateTicketModal from "./common/modals/updateTicketModal";
 import TicketInfoBox from "./ticketInfoBox";
 import CommentForm from "./commentForm";
 import CommentSection from "./common/commentSection";
+import UpdateProjectDeveloperModal from "./common/modals/updateProjectDeveloperModal";
 class Project extends Component {
   state = {
     project: {},
     developers: [],
+    currentProjectDeveloper: {},
     tickets: [],
     ticketSortColumn: { path: "title", order: "asc" },
     developerSortColumn: { path: "developer.user.username", order: "asc" },
@@ -35,6 +37,7 @@ class Project extends Component {
     developerModal: { show: false },
     ticketModal: { show: false },
     updateTicketModal: { ticket: null, show: false },
+    updateDeveloperModal: { developer: null, show: false },
     currentSelectedTicket: null,
     comments: null,
   };
@@ -48,7 +51,15 @@ class Project extends Component {
 
     const { data: tickets } = await getProjectTickets(project_id, token);
     const { data: developers } = await getProjectDevelopers(project_id, token);
-    this.setState({ tickets, developers, project });
+    const currentProjectDeveloper = developers.filter(
+      (d) => d.developer.user.id === this.props.user.id
+    );
+    this.setState({
+      tickets,
+      developers,
+      project,
+      currentProjectDeveloper: currentProjectDeveloper[0],
+    });
   }
 
   handleDeveloperPageChange = (page) => {
@@ -68,6 +79,8 @@ class Project extends Component {
   };
 
   handleDeveloperDelete = async (developer) => {
+    if (this.state.currentProjectDeveloper.admin_permission === false)
+      return toast.error("you need admin permissions to perform this action");
     const project_id = this.state.project.id;
     const originalDevelopers = this.state.developers;
     const developers = originalDevelopers.filter(
@@ -80,7 +93,9 @@ class Project extends Component {
         developer.developer.id,
         localStorage.getItem("token")
       );
-      toast.success(`${developer.user.username} was kicked from the project`);
+      toast.success(
+        `${developer.developer.user.username} was kicked from the project`
+      );
     } catch (ex) {
       if (ex.response.status === 403) toast.error(ex.response.data.error);
       this.setState({ developers: originalDevelopers });
@@ -123,6 +138,7 @@ class Project extends Component {
       developerModal: { show: false },
       ticketModal: { show: false },
       updateTicketModal: { ticket: null, show: false },
+      updateDeveloperModal: { developer: null, show: false },
     });
   };
 
@@ -150,12 +166,24 @@ class Project extends Component {
   };
 
   handleActivateAddDeveloperModal = () => {
-    const currentProjectDeveloper = this.state.developers.filter(
-      (d) => d.developer.user.id === this.props.user.id
-    );
-    if (currentProjectDeveloper[0].admin_permission === false)
+    if (this.state.currentProjectDeveloper.admin_permission === false)
       return toast.error("you need admin permissions to perform this action");
-    return this.setState({ developerModal: { show: true } });
+    return this.setState({
+      developerModal: { show: true },
+    });
+  };
+
+  handleActivateUpdateDeveloperModal = (developer) => {
+    if (this.state.currentProjectDeveloper.admin_permission === false)
+      return toast.error("you need admin permissions to perform this action");
+    if (
+      this.state.project.creator.user.username ===
+      developer.developer.user.username
+    )
+      return toast.error("you cannot update the creator of the project");
+    return this.setState({
+      updateDeveloperModal: { developer: developer, show: true },
+    });
   };
 
   getPagedData = () => {
@@ -205,6 +233,7 @@ class Project extends Component {
       pageSize,
       developerModal,
       ticketModal,
+      updateDeveloperModal,
       updateTicketModal,
       currentSelectedTicket,
       comments,
@@ -237,6 +266,7 @@ class Project extends Component {
                       sortColumn={developerSortColumn}
                       onSort={this.handleDeveloperSort}
                       onDelete={this.handleDeveloperDelete}
+                      onUpdate={this.handleActivateUpdateDeveloperModal}
                       project_id={project.id}
                     />
                   </div>
@@ -327,6 +357,12 @@ class Project extends Component {
           show={developerModal.show}
           onClose={this.handleModalClose}
           project_id={project.id}
+        />
+        <UpdateProjectDeveloperModal
+          show={updateDeveloperModal.show}
+          onClose={this.handleModalClose}
+          project_id={project.id}
+          developer={updateDeveloperModal.developer}
         />
         <CreateTicketModal
           show={ticketModal.show}

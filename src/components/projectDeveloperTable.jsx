@@ -29,6 +29,12 @@ class ProjectDevelopersTable extends Component {
             >
               Kick Developer
             </a>
+            <a
+              className="dropdown-item"
+              onClick={() => this.props.onUpdate(developer)}
+            >
+              Update Developer
+            </a>
           </div>
         </div>
       ),

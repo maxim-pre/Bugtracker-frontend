@@ -76,6 +76,14 @@ export function addDeveloper(project_id, data, token) {
   );
 }
 
+export function updateProjectDeveloper(project_id, id, data, token) {
+  return http.patch(
+    `http://127.0.0.1:8000/bugtracker/projects/${project_id}/developers/${id}/`,
+    data,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}
+
 export function deleteDeveloper(project_id, developer_id, token) {
   return http.delete(
     `http://127.0.0.1:8000/bugtracker/projects/${project_id}/developers/${developer_id}`,

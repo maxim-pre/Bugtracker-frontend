@@ -7,8 +7,8 @@ class AddTicketForm extends Form {
     data: {
       title: "",
       description: "",
-      priority: "",
-      type: "",
+      priority: "L",
+      type: "I",
       developers: [],
     },
     errors: {},

@@ -45,12 +45,6 @@ class SideBar extends Component {
         <hr className="sidebar-dividers" />
         <div className="sidebar-heading">User actions</div>
         <NavItem
-          label={"profile"}
-          url="/profile"
-          isactive={false}
-          icon={<i class="fa fa-user" aria-hidden="true"></i>}
-        />
-        <NavItem
           label={"Logout"}
           url={"/logout"}
           isactive={false}

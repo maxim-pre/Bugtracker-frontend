@@ -7,6 +7,7 @@ import Pagination from "./common/pagination";
 import ProjectTable from "./projectsTable";
 import UpdateProjectModal from "./common/modals/updateProjectModal";
 import CreateProjectModal from "./common/modals/createProjectModal";
+import DeleteConformationModal from "./common/modals/deleteConformationModal";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import ListGroup from "./common/listGroupHorizontal";
@@ -25,6 +26,7 @@ class Projects extends Component {
     currentListGroup: { name: "All Projects", id: "" },
     updateModal: { project: null, show: false },
     createModal: { show: false },
+    deleteModal: { project: null, show: false },
   };
 
   async componentDidMount() {
@@ -50,11 +52,17 @@ class Projects extends Component {
     this.setState({ projects });
     try {
       await deleteProject(project.id, localStorage.getItem("token"));
+      this.setState({ deleteModal: { project: null, show: false } });
     } catch (ex) {
       if (ex.response && ex.response.status === 403)
         toast.error(ex.response.data.error);
       this.setState({ projects: originalProjects });
+      this.setState({ deleteModal: { project: null, show: false } });
     }
+  };
+
+  activateDeleteConformation = (project) => {
+    this.setState({ deleteModal: { project: project, show: true } });
   };
 
   handleUpdate = (project) => {
@@ -65,6 +73,7 @@ class Projects extends Component {
     this.setState({
       updateModal: { project: null, show: false },
       createModal: { show: false },
+      deleteModal: { project: null, show: false },
     });
   };
 
@@ -133,11 +142,13 @@ class Projects extends Component {
       listgroup,
       updateModal,
       createModal,
+      deleteModal,
     } = this.state;
     const { count, data } = this.getPagedData();
     return (
       <React.Fragment>
         <h1 className="h3 mb-3 text-gray-800">Dashboard</h1>
+
         <ListGroup
           items={listgroup}
           onChange={this.handleListGroupChange}
@@ -162,7 +173,7 @@ class Projects extends Component {
                   data={data}
                   sortColumn={sortColumn}
                   onSort={this.handleSort}
-                  onDelete={this.handleDelete}
+                  onDelete={this.activateDeleteConformation}
                   onUpdate={this.handleUpdate}
                 />
               </div>
@@ -186,6 +197,12 @@ class Projects extends Component {
           show={updateModal.show}
           project={updateModal.project}
           onClose={this.handleModalClose}
+        />
+        <DeleteConformationModal
+          show={deleteModal.show}
+          project={deleteModal.project}
+          onClose={this.handleModalClose}
+          onDelete={this.handleDelete}
         />
       </React.Fragment>
     );

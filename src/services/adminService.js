@@ -7,7 +7,7 @@ export function getUsers(token) {
 }
 
 export function updateUser(user_id, data, token) {
-  return http.put(`http://127.0.0.1:8000/auth/users/${user_id}/`, data, {
+  return http.patch(`http://127.0.0.1:8000/auth/users/${user_id}/`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 }

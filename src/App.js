@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Profile from "./components/profile";
 import Admin from "./components/admin";
+import Footer from "./components/footer";
 class App extends Component {
   state = {};
 
@@ -51,6 +52,7 @@ class App extends Component {
                     <Route path="*" element={<Projects user={user} />} />
                   </Routes>
                 </div>
+                <Footer />
               </div>
             </div>
           </div>
