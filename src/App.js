@@ -63,7 +63,6 @@ class App extends Component {
       <React.Fragment>
         <div className="content">
           <Routes>
-            <Route path="*" element={<LoginForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegistrationForm />} />
           </Routes>

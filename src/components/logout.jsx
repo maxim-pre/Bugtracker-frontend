@@ -4,7 +4,7 @@ class Logout extends Component {
   componentDidMount() {
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("token");
-    window.location.href = "/";
+    window.location.href = "/login";
   }
   render() {
     return null;
