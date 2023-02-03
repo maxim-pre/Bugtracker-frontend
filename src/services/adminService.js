@@ -1,19 +1,22 @@
 import http from "./httpService";
+import * as data from "../config.json";
+
+const { apiUrl } = data;
 
 export function getUsers(token) {
-  return http.get("http://127.0.0.1:8000/auth/users", {
+  return http.get(`${apiUrl}/auth/users`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
 
 export function updateUser(user_id, data, token) {
-  return http.patch(`http://127.0.0.1:8000/auth/users/${user_id}/`, data, {
+  return http.patch(`${apiUrl}/auth/users/${user_id}/`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
 
 export function deleteUser(user_id, token) {
-  return http.delete(`http://127.0.0.1:8000/auth/users/${user_id}/`, {
+  return http.delete(`${apiUrl}/auth/users/${user_id}/`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
