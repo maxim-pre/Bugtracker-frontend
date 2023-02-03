@@ -15,7 +15,7 @@ class SideBar extends Component {
           label={"Tracker"}
           url={"/projects"}
           isactive={true}
-          icon={<i class="fa fa-bug" aria-hidden="true"></i>}
+          icon={<i className="fa fa-bug" aria-hidden="true"></i>}
         />
 
         <hr className="sidebar-dividers" />
@@ -26,7 +26,7 @@ class SideBar extends Component {
           label={"DashBoard"}
           url={"/projects"}
           isactive={false}
-          icon={<i class="fa fa-desktop" aria-hidden="true"></i>}
+          icon={<i className="fa fa-desktop" aria-hidden="true"></i>}
         />
         <NavItem
           label={"Tickets"}
@@ -48,7 +48,7 @@ class SideBar extends Component {
           label={"Logout"}
           url={"/logout"}
           isactive={false}
-          icon={<i class="fa fa-sign-out" aria-hidden="true"></i>}
+          icon={<i className="fa fa-sign-out" aria-hidden="true"></i>}
         />
       </ul>
     );

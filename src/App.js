@@ -34,7 +34,6 @@ class App extends Component {
             <SideBar user={user} />
             <div id="content-wrapper" className="d-flex flex-column">
               <div id="content">
-                {/* <TopBar user={user} /> */}
                 <div className="container-fluid mt-4">
                   <Routes>
                     <Route path="/tickets" element={<Tickets />} />

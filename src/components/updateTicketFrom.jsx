@@ -65,10 +65,11 @@ class EditTicketForm extends Form {
 
   getdeveloperItems = (developers) => {
     const developerItems = [];
+    console.log(developers);
     for (var i = 0, l = developers.length; i < l; i++) {
       developerItems.push({
-        value: developers[i].id,
-        label: developers[i].user.username,
+        value: developers[i].developer.id,
+        label: developers[i].developer.user.username,
       });
     }
     return developerItems;

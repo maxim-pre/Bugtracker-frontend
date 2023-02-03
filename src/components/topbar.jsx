@@ -12,7 +12,7 @@ class TopBar extends Component {
             label={
               <button className="btn btn-sm btn-light btn-icon-split">
                 <span className="icon text-black-50">
-                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+                  <i className="fa fa-sign-out" aria-hidden="true"></i>
                 </span>
                 <span className="text">Logout</span>
               </button>
@@ -29,7 +29,7 @@ class TopBar extends Component {
                 label={
                   <button className="btn btn-sm btn-danger btn-icon-split">
                     <span className="icon text-white-50">
-                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      <i className="fa fa-sign-out" aria-hidden="true"></i>
                     </span>
                     <span className="text">Logout</span>
                   </button>
@@ -43,7 +43,7 @@ class TopBar extends Component {
                 label={
                   <button className="btn btn-sm btn-primary btn-icon-split">
                     <span className="icon text-white-50">
-                      <i class="fa fa-user" aria-hidden="true"></i>
+                      <i className="fa fa-user" aria-hidden="true"></i>
                     </span>
                     <span className="text">{user.username}</span>
                   </button>

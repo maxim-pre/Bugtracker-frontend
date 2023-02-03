@@ -10,7 +10,7 @@ class ProjectTable extends Component {
     return (
       <ul className="no-bullets">
         {developers.map((devs) => (
-          <li>{`${devs.developer.user.username}${
+          <li key={devs.developer.id}>{`${devs.developer.user.username}${
             devs.developer.user.username === project.creator.user.username
               ? "-creator"
               : ""
@@ -33,6 +33,7 @@ class ProjectTable extends Component {
       cellClass: "description wrap-text",
     },
     {
+      key: "contributors",
       label: "Contributors",
       click: true,
       content: (project) => this.renderContributors(project),

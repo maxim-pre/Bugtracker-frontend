@@ -1,6 +1,6 @@
 const FormBackground = (props) => {
   return (
-    <body className="bg-gradient-primary">
+    <div className="body bg-gradient-primary">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
@@ -16,7 +16,7 @@ const FormBackground = (props) => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

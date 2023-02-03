@@ -71,8 +71,8 @@ class RegistrationForm extends Form {
           {this.rederButton("Submit")}
         </form>
         <hr className="form-divider" />
-        <div class="text-center">
-          <Link class="small" to="/login">
+        <div className="text-center">
+          <Link className="small" to="/login">
             Back to Login
           </Link>
         </div>
