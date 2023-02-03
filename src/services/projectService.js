@@ -39,7 +39,7 @@ export function getProjectTickets(project_id, token) {
 // creates a new project#
 export function createProject(project, token) {
   return http.post(
-    "${apiUrl}/bugtracker/projects/",
+    `${apiUrl}/bugtracker/projects/`,
     {
       name: project.name,
       description: project.description,
