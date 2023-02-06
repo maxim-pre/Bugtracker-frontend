@@ -1,10 +1,7 @@
 import http from "./httpService";
-import * as data from "../config.json";
-
-const { apiUrl } = data;
 
 export function register(user) {
-  return http.post(`${apiUrl}/auth/users/`, {
+  return http.post(`/auth/users/`, {
     username: user.username,
     password: user.password,
     email: user.email,

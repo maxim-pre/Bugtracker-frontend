@@ -11,6 +11,7 @@ import "./index.css";
 import "./sb-admin-2.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+console.log(process.env);
 root.render(
   <React.StrictMode>
     <BrowserRouter>

@@ -1,17 +1,14 @@
 import http from "./httpService";
-import * as data from "../config.json";
-
-const { apiUrl } = data;
 
 export function login(username, password) {
-  return http.post(`${apiUrl}/auth/jwt/create/`, {
+  return http.post(`/auth/jwt/create/`, {
     username,
     password,
   });
 }
 
 export async function getUser(token) {
-  const response = http.get(`${apiUrl}/auth/users/me/`, {
+  const response = http.get(`/auth/users/me/`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
