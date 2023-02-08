@@ -14,6 +14,7 @@ import "./App.css";
 import Profile from "./components/profile";
 import Admin from "./components/admin";
 import Footer from "./components/footer";
+import DemoLogin from "./components/demoLogin";
 class App extends Component {
   state = {};
 
@@ -64,6 +65,7 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/demo" element={<DemoLogin />} />
             <Route path="/register" element={<RegistrationForm />} />
           </Routes>
         </div>

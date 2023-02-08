@@ -51,6 +51,11 @@ class LoginForm extends Form {
             Create an Account!
           </Link>
         </div>
+        <div className="text-center">
+          <Link className="small" to="/demo">
+            Login as the Demo Admin
+          </Link>
+        </div>
       </FormBackground>
     );
   }
