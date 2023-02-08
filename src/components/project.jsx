@@ -79,8 +79,12 @@ class Project extends Component {
   };
 
   handleDeveloperDelete = async (developer) => {
-    if (this.state.currentProjectDeveloper.admin_permission === false)
-      return toast.error("you need admin permissions to perform this action");
+    try {
+      if (this.state.currentProjectDeveloper.admin_permission === false)
+        return toast.error("you need admin permissions to perform this action");
+    } catch {
+      return toast.error("you do not have permission");
+    }
     const project_id = this.state.project.id;
     const originalDevelopers = this.state.developers;
     const developers = originalDevelopers.filter(
@@ -109,7 +113,7 @@ class Project extends Component {
     this.setState({ tickets });
     try {
       await deleteTicket(project_id, ticket.id, localStorage.getItem("token"));
-      toast.success(`Ticket with title${ticket.title} was deleted`);
+      toast.success(`Ticket with title ${ticket.title} was deleted`);
     } catch (ex) {
       if (ex.response.status === 403) toast.error(ex.response.data.error);
       this.setState({ tickets: originalTickets });
@@ -166,16 +170,24 @@ class Project extends Component {
   };
 
   handleActivateAddDeveloperModal = () => {
-    if (this.state.currentProjectDeveloper.admin_permission === false)
-      return toast.error("you need admin permissions to perform this action");
+    try {
+      if (this.state.currentProjectDeveloper.admin_permission === false)
+        return toast.error("you need admin permissions to perform this action");
+    } catch {
+      return toast.error("you do not have permission");
+    }
     return this.setState({
       developerModal: { show: true },
     });
   };
 
   handleActivateUpdateDeveloperModal = (developer) => {
-    if (this.state.currentProjectDeveloper.admin_permission === false)
-      return toast.error("you need admin permissions to perform this action");
+    try {
+      if (this.state.currentProjectDeveloper.admin_permission === false)
+        return toast.error("you need admin permissions to perform this action");
+    } catch {
+      return toast.error("you do not have permission");
+    }
     if (
       this.state.project.creator.user.username ===
       developer.developer.user.username

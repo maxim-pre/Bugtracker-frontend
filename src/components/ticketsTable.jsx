@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Table from "./common/table";
-import { redirect } from "react-router-dom";
 class TicketTable extends Component {
   columns = [
     {
@@ -11,7 +10,7 @@ class TicketTable extends Component {
     {
       path: "project.name",
       label: "Project",
-      Click: true,
+      click: true,
     },
     {
       path: "priority",
