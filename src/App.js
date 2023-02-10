@@ -61,7 +61,7 @@ class App extends Component {
     }
     return (
       <React.Fragment>
-        <div className="content">
+        <div className="body">
           <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/login" element={<LoginForm />} />
