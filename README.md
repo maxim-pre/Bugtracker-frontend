@@ -198,7 +198,7 @@ class Ticket(models.Model):
 
 Here is an example of one of the serializers I created.
 
-The following serializer was used when a user wants to add another contributor to their project. I've made use of django's validate function to make sure that the user being added exists and is not already part of the project.
+The following serializer was used when a user wants to add another contributor to their project. I've made use of django's validate function to make sure that the user being added exists and is not already part of the project. Then I'm overiding the save function to get the project and developer_id.
 
 ```python
 class CreateProjectDeveloperSerializer(serializers.Serializer):
@@ -226,7 +226,6 @@ class CreateProjectDeveloperSerializer(serializers.Serializer):
         return username
 
     def save(self, **kwargs):
-        # developer_id = self.validated_data['developer_id']
         username = self.validated_data['username']
         role = self.validated_data['role']
         project_id = self.context['project_id']
@@ -305,12 +304,6 @@ class ProjectViewSet(ModelViewSet):
         return super().update(request, *args, **kwargs)
 ```
 
-# Challenges
+# Future improvements
 
--
-
-# Wins
-
-# Key Learnings/Takeaways
-
-# Bugs Future improvements
+- I would like to make the website fully responsive. Currently It only works on large screens
